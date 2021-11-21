@@ -7,7 +7,7 @@ import Grid from '../../components/Articles/Grid';
 const Home = () => {
   return (
     <>
-      {/* <NewsSlider /> */}
+      <NewsSlider />
       <div className='page-padding mt-6'>
         <CovidTable />
         <Grid country='it' category size='3' />

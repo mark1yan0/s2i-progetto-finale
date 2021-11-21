@@ -14,6 +14,12 @@ const NewsSlider = () => {
     return str?.length > n ? str.substr(0, n - 1) + append : str;
   }
 
+  // let sliderItems = [];
+
+  // for (let i = 0; i < 4; i++) {
+  //   sliderItems.push(allNews[Math.floor(Math.random() * 10)]);
+  // }
+
   return (
     <div
       id='home-slider'
@@ -21,7 +27,7 @@ const NewsSlider = () => {
       style={{ height: '600px' }}
     >
       <Slider auto='10000' hasArrows hasBullets BulletComponent={Bullets}>
-        {allNews?.map(article => (
+        {allNews.map(article => (
           <div
             className='h-full w-full'
             style={{
@@ -33,7 +39,7 @@ const NewsSlider = () => {
               className='absolute bottom-0 left-0 w-full p-10 text-text-light flex items-end'
               style={{
                 background:
-                  'linear-gradient(0deg, rgba(0,0,0,0.6) 79%, rgba(0,0,0,0.8631827731092436) 100%)',
+                  'linear-gradient(0deg, rgba(0,0,64,0.8) 10%, rgba(65,62,124,0.8015581232492998) 85%)',
               }}
             >
               <div>
@@ -66,4 +72,4 @@ const NewsSlider = () => {
   );
 };
 
-export default NewsSlider;
+export default React.memo(NewsSlider);

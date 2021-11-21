@@ -5,7 +5,7 @@ const NewsPage = () => {
   return (
     <div className='page-padding'>
       <h1>NewsPage</h1>
-      {/* <Grid country='it' size='9' /> */}
+      <Grid country='it' size='9' />
     </div>
   );
 };

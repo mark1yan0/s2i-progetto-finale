@@ -84,12 +84,12 @@ export const newsSelector = state => state.news;
 // A thunk is a middleware that lets us call a function
 // to do something, and which results in dispatching
 // Redux actions to update the store
-export function fetchNews(country, category, size) {
+export function fetchNews(country, category) {
   return async dispatch => {
     dispatch(getNews());
     try {
       const res = await axios.get(
-        `https://newsapi.org/v2/top-headlines?country=${country}&pageSize=${size}&category=${category}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
+        `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
       );
       //on success pass data to the payload, and so to the store
 

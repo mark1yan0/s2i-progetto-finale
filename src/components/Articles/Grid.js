@@ -1,33 +1,11 @@
-import React, { useEffect } from 'react';
-//redux
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  newsSelector,
-  fetchNews,
-  setCategories,
-} from '../../services/newsSlice';
+import React from 'react';
+import useNews from '../../hooks/useNews';
+
 //components
 import Card from './Card';
 
 const Grid = ({ country, size, category }) => {
-  //update
-  const dispatch = useDispatch();
-  //state
-  const { allNews, newsCategories, loading, hasErrors } =
-    useSelector(newsSelector);
-
-  //dispatch thunk when component first mounts
-  useEffect(async () => {
-    if (allNews.length !== 0) return;
-    await dispatch(fetchNews(country, 'business', size)); //country in 'it' form
-    await dispatch(fetchNews(country, 'science', size));
-    await dispatch(fetchNews(country, 'technology', size));
-    await dispatch(fetchNews(country, 'sports', size));
-    await dispatch(fetchNews(country, 'health', size));
-    await dispatch(fetchNews(country, 'entertainment', size));
-    // console.log(newsCategory);
-    await dispatch(setCategories(allNews));
-  }, []);
+  const { allNews, newsCategories, loading, hasErrors } = useNews(country);
 
   //state search
   //top news state
@@ -74,15 +52,52 @@ const Grid = ({ country, size, category }) => {
 
   // categories.map(category => console.log(category));
 
+  //condiitonal logic
+  const newsContent = category ? (
+    Object.keys(newsCategories).map(category => (
+      <section className='py-3' key={category}>
+        <h1 className='text-2xl uppercase'>{category}</h1>
+        <div className='grid grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
+          {newsCategories[category].slice(0, size).map(article => (
+            <Card
+              image={article?.image}
+              link={article?.link}
+              title={article?.title}
+              description={article?.description}
+              author={article?.author}
+              date={article?.date}
+              source={article?.source}
+              key={article?.id}
+              category={article?.category}
+            />
+          ))}
+        </div>
+      </section>
+    ))
+  ) : (
+    <section className='grid grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
+      {allNews.slice(0, size).map(article => (
+        <Card
+          image={article?.image}
+          link={article?.link}
+          title={article?.title}
+          description={article?.description}
+          author={article?.author}
+          date={article?.date}
+          source={article?.source}
+          key={article?.id}
+          category={article?.category}
+        />
+      ))}
+    </section>
+  );
   return (
     <>
-      {loading ? (
-        <p>Loading news...</p>
-      ) : hasErrors ? (
-        <p>Cannot display news...</p>
-      ) : (
-        <>
-          {/* <form onSubmit={getSearch}>
+      {loading && <p>Loading news...</p>}
+      {hasErrors && <p>Cannot display news...</p>}
+      {!loading && !hasErrors && newsContent}
+
+      {/* <form onSubmit={getSearch}>
                     <input
                       className='border'
                       type='text'
@@ -92,52 +107,6 @@ const Grid = ({ country, size, category }) => {
                       onBlur={() => setSearchVisibility(false)}
                     />
                   </form> */}
-          {category ? (
-            Object.keys(newsCategories).map(category => (
-              <section className='py-3' key={category}>
-                <h1>{category}</h1>
-                <div className='grid grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
-                  {newsCategories[category].map(article => (
-                    <Card
-                      image={article?.image}
-                      link={article?.link}
-                      title={article?.title}
-                      description={article?.description}
-                      author={article?.author}
-                      date={article?.date}
-                      source={article?.source}
-                      key={article?.id}
-                      category={article?.category}
-                    />
-                  ))}
-                </div>
-              </section>
-            ))
-          ) : (
-            <section className='grid grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
-              {allNews.map(article => (
-                <Card
-                  image={article?.image}
-                  link={article?.link}
-                  title={article?.title}
-                  description={article?.description}
-                  author={article?.author}
-                  date={article?.date}
-                  source={article?.source}
-                  key={article?.id}
-                  category={article?.category}
-                />
-              ))}
-            </section>
-          )}
-
-          {/* <h1>{category}</h1> */}
-          {/* {news?.map(article => (
-              <div key={key}>{newsCategories[key]}</div>
-              
-            ))} */}
-        </>
-      )}
     </>
   );
 };

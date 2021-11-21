@@ -9,7 +9,7 @@ const CovidPage = () => {
       <h1>CovidPage</h1>
 
       <CovidTable expanded />
-      {/* <Grid country='it' category='sports' size='4' /> */}
+      <Grid country='it' size='6' />
     </div>
   );
 };
