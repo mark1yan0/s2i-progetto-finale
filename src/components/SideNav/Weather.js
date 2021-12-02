@@ -9,6 +9,7 @@ const Weather = () => {
   const { weather, loading, hasErrors } = useSelector(weatherSelector);
 
   useEffect(() => {
+    if (weather.length !== 0) return;
     dispatch(fetchWeather('voghera'));
   }, [dispatch]);
 
