@@ -12,6 +12,7 @@ const CovidTable = ({ expanded }) => {
   const { covidStats, loading, hasErrors } = useSelector(covidSelector);
 
   useEffect(() => {
+    if (covidStats.length !== 0) return;
     dispatch(fetchCovidStats('italy')); //country in english
   }, [dispatch]);
 

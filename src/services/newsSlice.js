@@ -14,6 +14,7 @@ const initialState = {
     health: [],
     entertainment: [],
   },
+  readLater: [],
 };
 
 //A slice for news
@@ -29,7 +30,6 @@ const newsSlice = createSlice({
     getNewsSuccess: (state, action) => {
       state.loading = false;
       state.hasErrors = false;
-      console.log(action.payload);
       state.allNews = state.allNews.concat(action.payload); //copiare tutte le news + quelle nuove
     }, //action -> {payload, type}
 
@@ -64,12 +64,58 @@ const newsSlice = createSlice({
         article => article.category === 'entertainment'
       );
     },
+
+    toggleReadLater: (state, action) => {
+      const addedArticle = action.payload[0];
+      const filteredNews = state.allNews.filter(
+        article => article.id !== addedArticle.id
+      );
+      const readLaterList = state.readLater;
+
+      const isReadLater = readLaterList.find(
+        article => article.id === addedArticle.id
+      );
+
+      if (isReadLater) {
+        const removedArticleList = readLaterList.filter(
+          article => article.id !== addedArticle.id
+        );
+        return {
+          ...state,
+          allNews: [
+            ...filteredNews,
+            {
+              ...addedArticle,
+              readLater: false,
+            },
+          ],
+          readLater: [...removedArticleList],
+        };
+      }
+
+      return {
+        ...state,
+        allNews: [
+          ...filteredNews,
+          {
+            ...addedArticle,
+            readLater: true,
+          },
+        ],
+        readLater: [...readLaterList, { ...addedArticle, readLater: true }],
+      };
+    },
   },
 });
 
 //actions to alter the state values
-export const { getNews, getNewsSuccess, getNewsFailure, setCategories } =
-  newsSlice.actions;
+export const {
+  getNews,
+  getNewsSuccess,
+  getNewsFailure,
+  setCategories,
+  toggleReadLater,
+} = newsSlice.actions;
 
 //the reducers
 export default newsSlice.reducer;
@@ -84,12 +130,12 @@ export const newsSelector = state => state.news;
 // A thunk is a middleware that lets us call a function
 // to do something, and which results in dispatching
 // Redux actions to update the store
-export function fetchNews(country, category) {
+export function fetchNews(country, category, size) {
   return async dispatch => {
     dispatch(getNews());
     try {
       const res = await axios.get(
-        `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
+        `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&pageSize=${size}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
       );
       //on success pass data to the payload, and so to the store
 
@@ -105,6 +151,7 @@ export function fetchNews(country, category) {
             link: article.url,
             category: category,
             id: uuid(),
+            readLater: false,
           }))
         )
       );

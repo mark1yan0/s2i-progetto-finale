@@ -5,7 +5,7 @@ import useNews from '../../hooks/useNews';
 import Card from './Card';
 
 const Grid = ({ country, size, category }) => {
-  const { allNews, newsCategories, loading, hasErrors } = useNews(country);
+  const { allNews, newsCategories, loading, hasErrors } = useNews(country, 8);
 
   //state search
   //top news state
@@ -68,7 +68,9 @@ const Grid = ({ country, size, category }) => {
               date={article?.date}
               source={article?.source}
               key={article?.id}
+              id={article?.id}
               category={article?.category}
+              readLater={article?.readLater}
             />
           ))}
         </div>
@@ -86,7 +88,9 @@ const Grid = ({ country, size, category }) => {
           date={article?.date}
           source={article?.source}
           key={article?.id}
+          id={article?.id}
           category={article?.category}
+          readLater={article?.readLater}
         />
       ))}
     </section>
