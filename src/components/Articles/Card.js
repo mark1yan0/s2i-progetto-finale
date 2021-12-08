@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { toggleReadLater } from '../../services/newsSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { AiOutlinePlus } from 'react-icons/ai';

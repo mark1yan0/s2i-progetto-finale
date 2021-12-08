@@ -15,6 +15,8 @@ const initialState = {
     entertainment: [],
   },
   readLater: [],
+  categories: false,
+  sliderNews: [],
 };
 
 //A slice for news
@@ -63,6 +65,8 @@ const newsSlice = createSlice({
       state.newsCategories.entertainment = state.allNews.filter(
         article => article.category === 'entertainment'
       );
+
+      state.categories = true;
     },
 
     toggleReadLater: (state, action) => {
@@ -105,6 +109,10 @@ const newsSlice = createSlice({
         readLater: [...readLaterList, { ...addedArticle, readLater: true }],
       };
     },
+
+    setSliderNews: (state, action) => {
+      state.sliderNews = action.payload;
+    },
   },
 });
 
@@ -115,6 +123,7 @@ export const {
   getNewsFailure,
   setCategories,
   toggleReadLater,
+  setSliderNews,
 } = newsSlice.actions;
 
 //the reducers

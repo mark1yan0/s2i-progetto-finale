@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { newsSelector, fetchNews, setCategories } from '../services/newsSlice';
+import useSliderNews from './useSliderNews';
 
 const useNews = (country, size) => {
   const dispatch = useDispatch();
@@ -21,13 +22,17 @@ const useNews = (country, size) => {
       //filter categories once done fetching
       await dispatch(setCategories(allNews));
     }
-
     getNews();
-  }, [country]);
+  }, [country, allNews, dispatch, size]);
+
+  useSliderNews();
+
+  // const sliderItems = useSliderNews();
 
   return {
     allNews,
     newsCategories,
+
     loading,
     hasErrors,
   };

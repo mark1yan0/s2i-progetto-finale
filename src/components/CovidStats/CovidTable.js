@@ -14,7 +14,7 @@ const CovidTable = ({ expanded }) => {
   useEffect(() => {
     if (covidStats.length !== 0) return;
     dispatch(fetchCovidStats('italy')); //country in english
-  }, [dispatch]);
+  }, [dispatch, covidStats.length]);
 
   function formatNumbers(number) {
     return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
@@ -22,6 +22,8 @@ const CovidTable = ({ expanded }) => {
 
   return (
     <section className='w-full bg-secondary-dark py-6 my-2'>
+      {loading && <p>Loading ...</p>}
+      {hasErrors && <p>Theres an error</p>}
       {expanded
         ? covidStats?.map(data => {
             // expanded table

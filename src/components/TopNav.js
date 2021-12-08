@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 //icons
 import { FaUserAlt } from 'react-icons/fa';
 //components
-import Button from '../components/Button';
 
 const TopNav = () => {
   return (
