@@ -74,6 +74,7 @@ const newsSlice = createSlice({
       const filteredNews = state.allNews.filter(
         article => article.id !== addedArticle.id
       );
+
       const readLaterList = state.readLater;
 
       const isReadLater = readLaterList.find(
@@ -82,7 +83,7 @@ const newsSlice = createSlice({
 
       if (isReadLater) {
         const removedArticleList = readLaterList.filter(
-          article => article.id !== addedArticle.id
+          article => article.id !== isReadLater.id
         );
         return {
           ...state,
@@ -100,11 +101,11 @@ const newsSlice = createSlice({
       return {
         ...state,
         allNews: [
-          ...filteredNews,
           {
             ...addedArticle,
             readLater: true,
           },
+          ...filteredNews,
         ],
         readLater: [...readLaterList, { ...addedArticle, readLater: true }],
       };

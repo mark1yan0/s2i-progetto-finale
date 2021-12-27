@@ -4,15 +4,31 @@ import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 //components
 import Button from '../../../components/Button';
 
-const Login = ({ passwordVisible, event }) => {
+const Login = ({
+  passwordVisible,
+  event,
+  setLoginEmail,
+  setLoginPassword,
+  loginHandler,
+}) => {
   return (
-    <form className='flex flex-col justify-between'>
+    <form className='flex flex-col justify-between' onSubmit={loginHandler}>
       <h1 className='text-center text-4xl font-bold text-primary-dark'>
         Accedi
       </h1>
-      <input type='email' placeholder='Email' className='input' />
+      <input
+        type='email'
+        placeholder='Email'
+        className='input'
+        onChange={e => setLoginEmail(e.target.value)}
+      />
       <div className='relative'>
-        <input type='password' placeholder='Password' className='input pws' />
+        <input
+          type='password'
+          placeholder='Password'
+          className='input pws'
+          onChange={e => setLoginPassword(e.target.value)}
+        />
         {passwordVisible ? (
           <AiFillEyeInvisible className='show-password-icon' onClick={event} />
         ) : (
@@ -21,7 +37,7 @@ const Login = ({ passwordVisible, event }) => {
       </div>
 
       <div className='flex justify-end items-center'>
-        <Button text='Accedi' primary />
+        <Button text='Accedi' type='submit' primary />
       </div>
     </form>
   );

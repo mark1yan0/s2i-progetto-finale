@@ -28,9 +28,7 @@ const Card = ({
     const targetArticle = allNews?.filter(article => article.id === id);
     dispatch(toggleReadLater(targetArticle));
   }
-
-  const readLaterArticle = readLater?.find(article => article.id === id);
-  const isReadLater = readLaterArticle?.readLater;
+  const isReadLater = readLater?.find(article => article.id === id)?.readLater;
 
   return (
     <div className='bg-secondary-light text-text-dark rounded shadow-md transition sm:transform hover:scale-105'>
@@ -59,13 +57,13 @@ const Card = ({
         </a>
       </div>
       <div
-        className={`absolute bottom-4 right-4 cursor-pointer rounded text-text-dark transition hover:text-text-light hover:bg-primary-dark ${
-          isReadLater && 'text-text-light bg-primary-dark'
+        className={`absolute bottom-4 right-4 cursor-pointer rounded text-text-dark hover:text-text-light hover:bg-primary-dark ${
+          isReadLater && 'bg-primary-dark'
         }`}
         onClick={toggleReadLaterHandler}
       >
         {isReadLater ? (
-          <AiOutlineMinus className='text-3xl' />
+          <AiOutlineMinus className='text-3xl text-text-light' />
         ) : (
           <AiOutlinePlus className='text-3xl' />
         )}
