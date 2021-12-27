@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Button = ({ text, primary, secondary, muted, link }) => {
+const Button = ({ text, primary, secondary, muted, type }) => {
   return (
     <button
       className={`px-6 py-1 m-2 ${
@@ -9,6 +9,7 @@ const Button = ({ text, primary, secondary, muted, link }) => {
         muted &&
         'text-secondary-light transparent border border-secondary-light '
       } hover:bg-primary-light`}
+      type={type}
     >
       <p>{text}</p>
     </button>

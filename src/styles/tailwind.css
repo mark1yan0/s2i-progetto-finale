@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer components {
   /* page padding */
   .page-padding {
@@ -14,7 +20,7 @@
   }
 
   /* Sign page
-  ====================== */
+    ====================== */
   /* input */
   .input {
     @apply rounded text-primary-dark bg-secondary-dark my-3 p-2 w-full focus:outline focus:border-primary-dark;

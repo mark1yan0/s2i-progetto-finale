@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { weatherSelector, fetchWeather } from '../../services/WeatherSlice';
+import { weatherSelector, fetchWeather } from '../../services/weatherSlice';
 
 const Weather = () => {
   //weather data

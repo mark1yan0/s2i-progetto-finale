@@ -1,57 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 //icons
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 //components
 import Button from '../../../components/Button';
+import { auth } from '../../../firebase-config';
 
-const Signup = ({ passwordVisible, event }) => {
+const Signup = ({
+  passwordVisible,
+  event,
+  setRegisterEmail,
+  setRegisterPassword,
+  registerHandler,
+}) => {
   //form validation
-  const [notLength, setNotLength] = useState(false);
-  const [notLetter, setNotLetter] = useState(false);
-  const [notUpper, setNotUpper] = useState(false);
-  const [notEqual, setNotEqual] = useState(false);
+  const [notLength, setNotLength] = useState(null);
+  const [notLetter, setNotLetter] = useState(null);
+  const [notUpper, setNotUpper] = useState(null);
+  const [notEqual, setNotEqual] = useState(null);
 
   /* Form validation
    ==============================*/
-  const isPasswordValid = function (e) {
-    console.log(e.target.value);
-    let password = e.target.value;
+  // const isPasswordValid = function (e) {
+  //   console.log(e.target.value);
+  //   let password = e.target.value;
 
-    //La password deve avere almeno 6 caratteri
-    if (password.length < 6) {
-      setNotLength(true);
-    } else {
-      setNotLength(false);
-    }
+  //   //La password deve avere almeno 6 caratteri
+  //   if (password.length < 6) {
+  //     setNotLength(true);
+  //   } else {
+  //     setNotLength(false);
+  //   }
 
-    // La password può avere solo lettere, numeri e underscore
-    if (!/^\w+$/.test(password)) {
-      setNotLetter(true);
-    } else {
-      setNotLetter(false);
-    }
+  //   // La password può avere solo lettere, numeri e underscore
+  //   if (!/^\w+$/.test(password)) {
+  //     setNotLetter(true);
+  //   } else {
+  //     setNotLetter(false);
+  //   }
 
-    // La password deve avere almeno una lettere maiuscola
-    if (!/[A-Z]/g.test(password)) {
-      setNotUpper(true);
-    } else {
-      setNotUpper(false);
-    }
-  };
+  //   // La password deve avere almeno una lettere maiuscola
+  //   if (!/[A-Z]/g.test(password)) {
+  //     setNotUpper(true);
+  //   } else {
+  //     setNotUpper(false);
+  //   }
+  // };
 
-  function confirmPassword(e) {
-    let pwsToConfirm = document.querySelector('.pws-toconfirm');
-    let targetPws = e.target.value;
-    // Le password devono combaciare
-    if (pwsToConfirm.value !== targetPws) {
-      setNotEqual(true);
-    } else {
-      setNotEqual(false);
-    }
-  }
-
+  // function confirmPassword(e) {
+  //   let pwsToConfirm = document.querySelector('.pws-toconfirm');
+  //   let targetPws = e.target.value;
+  //   // Le password devono combaciare
+  //   if (pwsToConfirm.value !== targetPws) {
+  //     setNotEqual(true);
+  //   } else {
+  //     setNotEqual(false);
+  //   }
+  // }
   return (
-    <form className='flex flex-col justify-between'>
+    <form className='flex flex-col justify-between' onSubmit={registerHandler}>
       <h1 className='text-center text-4xl font-bold text-primary-dark'>
         Iscriviti
       </h1>
@@ -60,19 +66,29 @@ const Signup = ({ passwordVisible, event }) => {
         tardi
       </p>
 
-      <input type='email' placeholder='Email' className='input' />
+      <input
+        type='email'
+        placeholder='Email'
+        className='input'
+        onChange={e => setRegisterEmail(e.target.value)}
+      />
       <div className='relative'>
         <input
           type='password'
           placeholder='Password'
           className='input pws pws-toconfirm'
-          onBlur={e => isPasswordValid(e)}
+
+          // onBlur={e => {
+          //   isPasswordValid(e);
+          //   confirmPassword(e);
+          // }}
         />
         {passwordVisible ? (
           <AiFillEyeInvisible className='show-password-icon' onClick={event} />
         ) : (
           <AiFillEye className='show-password-icon' onClick={event} />
         )}
+        {/*
       </div>
       <div className=''>
         {notLength && (
@@ -87,14 +103,15 @@ const Signup = ({ passwordVisible, event }) => {
           <p className=''>
             La password deve avere almeno una lettera maiuscola
           </p>
-        )}
+        )} */}
       </div>
       <div className='relative'>
         <input
           type='password'
           placeholder='Conferma Password'
           className='input pws'
-          onBlur={e => confirmPassword(e)}
+          onChange={e => setRegisterPassword(e.target.value)}
+          // onBlur={e => confirmPassword(e)}
         />
         {passwordVisible ? (
           <AiFillEyeInvisible className='show-password-icon' onClick={event} />
@@ -102,9 +119,9 @@ const Signup = ({ passwordVisible, event }) => {
           <AiFillEye className='show-password-icon' onClick={event} />
         )}
       </div>
-      <div>{notEqual ? <p>Le password devono combaciare</p> : ''}</div>
+      {/* <div>{notEqual ? <p>Le password devono combaciare</p> : ''}</div> */}
       <div className='flex justify-end items-center'>
-        <Button text='Iscriviti' primary />
+        <Button text='Iscriviti' type='submit' primary />
       </div>
     </form>
   );
