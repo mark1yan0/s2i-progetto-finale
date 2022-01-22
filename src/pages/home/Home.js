@@ -16,11 +16,11 @@ const Home = () => {
       {loading && <Skeleton type='box' />}
       {hasErrors && <SnackBar type='error' message='Could not load Slider' />}
       {!loading && !hasErrors && <NewsSlider />}
-      <div className='page-padding mt-6'>
+      <div className='w-full page-padding'>
         <CovidTable />
         {loading && <Skeleton type='box' />}
         {hasErrors && <SnackBar type='error' message='Could not load news' />}
-        {!loading && !hasErrors && <Grid country='it' category size='3' />}
+        {!loading && <Grid country='it' category size='3' />}
       </div>
     </>
   );

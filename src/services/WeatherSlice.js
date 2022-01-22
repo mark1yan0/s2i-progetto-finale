@@ -19,10 +19,9 @@ const weatherSlice = createSlice({
       state.loading = false;
       state.hasErrors = false;
     },
-    getWeatherFailure: (state, error) => {
+    getWeatherFailure: state => {
       state.loading = false;
       state.hasErrors = true;
-      console.log(error);
     },
   },
 });

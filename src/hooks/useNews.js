@@ -5,12 +5,12 @@ import useSliderNews from './useSliderNews';
 
 const useNews = (country, size) => {
   //state
-  const { allNews, newsCategories } = useSelector(newsSelector);
+  const { allNews, hasErrors, newsCategories } = useSelector(newsSelector);
   const dispatch = useDispatch();
 
   //dispatch thunk when component first mounts
   useEffect(() => {
-    if (allNews.length !== 0) return;
+    if (allNews.length !== 0 || hasErrors) return;
     async function getNews() {
       await dispatch(fetchNews(country, 'business', size)); //country in 'it' form
       await dispatch(fetchNews(country, 'science', size));

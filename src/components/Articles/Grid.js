@@ -1,12 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import useNews from '../../hooks/useNews';
-
+import { useSelector } from 'react-redux';
 //components
 import Card from './Card';
 
 const Grid = ({ country, size, category }) => {
   const history = useHistory();
+  const { hasErrors } = useSelector(state => state.news);
   const { allNews, newsCategories } = useNews(country, 8);
   // let filteredNews;
   // switch (filter) {
@@ -155,7 +156,8 @@ const Grid = ({ country, size, category }) => {
   // console.log(filter);
   return (
     <>
-      {newsContent}
+      {!hasErrors && newsContent}
+      {hasErrors && <h1>Could not load news</h1>}
       {/* {filter ? filteredNewsContent : newsContent} */}
       {/* {filter?.length !== 0 ? filter : 'no filter'} */}
 

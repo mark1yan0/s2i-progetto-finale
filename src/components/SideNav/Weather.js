@@ -13,7 +13,7 @@ const Weather = () => {
   useEffect(() => {
     if (weather.length !== 0) return;
     dispatch(fetchWeather('voghera'));
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className='text-text-light px-6 pb-10'>
@@ -25,7 +25,9 @@ const Weather = () => {
             <Skeleton type='text' />
           ) : (
             <p>
-              <strong>{weather?.location?.name}</strong>
+              <strong>
+                {weather.length === 0 ? '' : weather?.location?.name}
+              </strong>
             </p>
           )}
           {loading ? (
@@ -33,7 +35,11 @@ const Weather = () => {
           ) : (
             <p>
               <strong>
-                {weather?.location?.region + ',' + weather?.location?.country}
+                {weather.length === 0
+                  ? ''
+                  : weather?.location?.region +
+                    ',' +
+                    weather?.location?.country}
               </strong>
             </p>
           )}
@@ -41,7 +47,7 @@ const Weather = () => {
           {loading ? (
             <Skeleton type='text' />
           ) : (
-            <p>{weather?.location?.localtime}</p>
+            <p>{weather.length === 0 ? '' : weather?.location?.localtime}</p>
           )}
           <div className='flex items-center'>
             <div>
@@ -49,14 +55,20 @@ const Weather = () => {
                 <Skeleton type='text' />
               ) : (
                 <p className='text-6xl'>
-                  <strong>{weather?.current?.temp_c + '°'}</strong>
+                  <strong>
+                    {weather.length === 0 ? '' : weather?.current?.temp_c + '°'}
+                  </strong>
                 </p>
               )}
               {loading ? (
                 <Skeleton type='text' />
               ) : (
                 <p className='text-3xl'>
-                  <strong>{weather?.current?.condition?.text}</strong>
+                  <strong>
+                    {weather.length === 0
+                      ? ''
+                      : weather?.current?.condition?.text}
+                  </strong>
                 </p>
               )}
             </div>

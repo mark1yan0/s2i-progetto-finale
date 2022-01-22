@@ -11,8 +11,7 @@ import {
 } from '../services/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import SnackBar from './SnackBar';
-//icons
-import { FaUserAlt } from 'react-icons/fa';
+import UserDropDown from './UserDropDown';
 
 const TopNav = () => {
   const history = useHistory();
@@ -32,7 +31,6 @@ const TopNav = () => {
           setTimeout(() => setLoggedIn(false), 2000);
         } else {
           dispatch(userSignedOut());
-          console.log('user singed out');
         }
       });
       return unsubscribe;
@@ -45,7 +43,6 @@ const TopNav = () => {
     try {
       await signOut(auth);
       dispatch(userSignedOut());
-      history.push('/auth');
     } catch (error) {
       console.log(error);
     }
@@ -58,29 +55,10 @@ const TopNav = () => {
           LOGO
         </NavLink>
       </h1>
-      {user ? (
-        <ul
-          className='flex items-center justify-between'
-          style={{ width: '20rem' }}
-        >
-          <li>
-            <p>Hello: {user?.email}</p>
-          </li>
-          <li>
-            <NavLink to='/saved'>Salvati</NavLink>
-          </li>
-          <li className='cursor-pointer' onClick={logoutHandler}>
-            <p>Esci</p>
-          </li>
-        </ul>
-      ) : (
-        <ul>
-          <li>
-            <NavLink to='/auth'>
-              <FaUserAlt className='text-xl' />
-            </NavLink>
-          </li>
-        </ul>
+      {user && (
+        <div className='hidden sm:block'>
+          <UserDropDown userEmail={user?.email} logout={logoutHandler} />
+        </div>
       )}
       {loggedIn && <SnackBar type='success' message='Logged in successfully' />}
     </nav>
