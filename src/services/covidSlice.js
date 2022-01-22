@@ -43,15 +43,18 @@ export function fetchCovidStats(country) {
     },
   };
 
-  return async dispatch => {
-    dispatch(getCovidStats());
+  return async (dispatch, getState) => {
+    const user = getState().authentication?.user;
+    if (user !== null) {
+      dispatch(getCovidStats());
 
-    try {
-      const res = await axios.request(options);
+      try {
+        const res = await axios.request(options);
 
-      dispatch(getCovidStatsSuccess(res?.data?.response));
-    } catch (error) {
-      dispatch(getCovidStatsFailure(error));
+        dispatch(getCovidStatsSuccess(res?.data?.response.splice(0, 1)));
+      } catch (error) {
+        dispatch(getCovidStatsFailure(error));
+      }
     }
   };
 }

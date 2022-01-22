@@ -1,20 +1,16 @@
 module.exports = {
-  // mode: 'jit',
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  purge: ['./public/**/*.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     fontFamily: {
       raleway: ['raleway', 'sans-serif'],
     },
-    borderRadius: {
-      DEFAULT: '25px',
-    },
-    // boxShadow: {
-    //   DEFAULT: '5px 5px 15px rgba(0, 0, 0, 0.3)',
-    // },
     outline: {
       DEFAULT: '1px solid #3A435E',
     },
     extend: {
+      borderRadius: {
+        full: '25px',
+      },
       padding: {
         19: '4.5rem',
       },

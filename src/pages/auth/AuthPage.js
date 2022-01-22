@@ -1,57 +1,64 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 //components
 import Login from './AuthForms/Login';
 import Signup from './AuthForms/Signup';
-
 //firebase
 import { auth } from '../../firebase-config';
 import {
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut,
 } from 'firebase/auth';
+import {
+  getCurrentUser,
+  getCurrentUserFailure,
+} from '../../services/authSlice';
+import SnackBar from '../../components/SnackBar';
 
 const AuthPage = () => {
-  const [loginForm, setLoginForm] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [loginForm, setLoginForm] = useState(true);
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
+
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
 
-  const [user, setUser] = useState({});
-  onAuthStateChanged(auth, currentUser => {
-    setUser(currentUser);
-  });
+  // for snackbar
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  async function loginHandler(e) {
+    e.preventDefault();
+    dispatch(getCurrentUser());
+    try {
+      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+      setLoggedIn(true);
+      setTimeout(() => setLoggedIn(false), 2000);
+      history.replace('/');
+    } catch (error) {
+      console.log(error.message);
+      dispatch(getCurrentUserFailure());
+    }
+  }
 
   async function registerHandler(e) {
     e.preventDefault();
+    dispatch(getCurrentUser());
     try {
-      const user = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         registerEmail,
         registerPassword
       );
+      setLoggedIn(true);
+      setTimeout(() => setLoggedIn(false), 2000);
+      history.replace('/');
     } catch (error) {
       console.log(error.message);
+      dispatch(getCurrentUserFailure());
     }
-  }
-
-  async function loginHandler(e) {
-    e.preventDefault();
-    try {
-      const user = await signInWithEmailAndPassword(
-        auth,
-        loginEmail,
-        loginPassword
-      );
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
-  async function logoutHandler() {
-    await signOut(auth);
   }
 
   //state to set password visible
@@ -113,19 +120,10 @@ const AuthPage = () => {
             </p>
           </>
         )}
-        <p>Hello: {user?.email}</p>
-        <button onClick={logoutHandler}>Esci</button>
       </section>
+      {loggedIn && <SnackBar type='success' message='Logged in successfully' />}
     </div>
   );
 };
 
 export default AuthPage;
-
-// let socialIcons = document.querySelectorAll('a.elementor-social-icon');
-
-// window.addEventListener('load', () => {
-//   for (icon in socialIcons) {
-//     socialIcons[icon].setAttribute('rel', 'noopener noreferrer');
-//   }
-// });

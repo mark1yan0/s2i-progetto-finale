@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 //components
 import Button from '../../../components/Button';
-import { auth } from '../../../firebase-config';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../../services/authSlice';
 
 const Signup = ({
   passwordVisible,
@@ -12,6 +13,7 @@ const Signup = ({
   setRegisterPassword,
   registerHandler,
 }) => {
+  const { loading } = useSelector(userSelector);
   //form validation
   const [notLength, setNotLength] = useState(null);
   const [notLetter, setNotLetter] = useState(null);
@@ -121,7 +123,7 @@ const Signup = ({
       </div>
       {/* <div>{notEqual ? <p>Le password devono combaciare</p> : ''}</div> */}
       <div className='flex justify-end items-center'>
-        <Button text='Iscriviti' type='submit' primary />
+        <Button text='Iscriviti' type='submit' primary loading={loading} />
       </div>
     </form>
   );

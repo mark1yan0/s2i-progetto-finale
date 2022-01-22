@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/output.css';
+import './index.css';
 import App from './App';
 //react router
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -11,7 +11,13 @@ import { Provider } from 'react-redux';
 import rootReducer from './services';
 
 //create store
-const store = configureStore({ reducer: rootReducer });
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
 
 ReactDOM.render(
   <React.StrictMode>

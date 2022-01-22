@@ -4,10 +4,9 @@ import { newsSelector, fetchNews, setCategories } from '../services/newsSlice';
 import useSliderNews from './useSliderNews';
 
 const useNews = (country, size) => {
-  const dispatch = useDispatch();
   //state
-  const { allNews, newsCategories, loading, hasErrors } =
-    useSelector(newsSelector);
+  const { allNews, newsCategories } = useSelector(newsSelector);
+  const dispatch = useDispatch();
 
   //dispatch thunk when component first mounts
   useEffect(() => {
@@ -22,19 +21,15 @@ const useNews = (country, size) => {
       //filter categories once done fetching
       await dispatch(setCategories(allNews));
     }
+
     getNews();
-  }, [country, allNews, dispatch, size]);
+  }, []);
 
   useSliderNews();
-
-  // const sliderItems = useSliderNews();
 
   return {
     allNews,
     newsCategories,
-
-    loading,
-    hasErrors,
   };
 };
 

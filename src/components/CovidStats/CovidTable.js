@@ -6,6 +6,8 @@ import { covidSelector, fetchCovidStats } from '../../services/covidSlice';
 //components
 import CovidCountryInfo from './CovidCountryInfo';
 import Search from '../Search';
+import Skeleton from '../Skeleton';
+import SnackBar from '../SnackBar';
 
 const CovidTable = ({ expanded }) => {
   const dispatch = useDispatch();
@@ -17,13 +19,14 @@ const CovidTable = ({ expanded }) => {
   }, [dispatch, covidStats.length]);
 
   function formatNumbers(number) {
-    return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    if (number)
+      return number?.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return;
   }
 
   return (
     <section className='w-full bg-secondary-dark py-6 my-2'>
-      {loading && <p>Loading ...</p>}
-      {hasErrors && <p>Theres an error</p>}
+      {hasErrors && <SnackBar type='error' message='Could not load data' />}
       {expanded
         ? covidStats?.map(data => {
             // expanded table
@@ -32,7 +35,7 @@ const CovidTable = ({ expanded }) => {
                 <div className='px-6 pb-6 flex justify-between items-center'>
                   <CovidCountryInfo
                     country={data.country}
-                    population={formatNumbers(data.population)}
+                    population={formatNumbers(data?.population)}
                   />
                   <Search />
                 </div>
@@ -49,13 +52,25 @@ const CovidTable = ({ expanded }) => {
                   <tbody>
                     <tr className='text-3xl text-red-600 font-bold'>
                       <td className='text-center pb-12'>
-                        {formatNumbers(data.cases.new)}
+                        {loading ? (
+                          <Skeleton type='text' />
+                        ) : (
+                          formatNumbers(data?.cases?.new)
+                        )}
                       </td>
                       <td className='covid-stats'>
-                        {formatNumbers(data.cases.active)}
+                        {loading ? (
+                          <Skeleton type='text' />
+                        ) : (
+                          formatNumbers(data?.cases?.active)
+                        )}
                       </td>
                       <td className='covid-stats'>
-                        {formatNumbers(data.cases.total)}
+                        {loading ? (
+                          <Skeleton type='text' />
+                        ) : (
+                          formatNumbers(data?.cases?.total)
+                        )}
                       </td>
                     </tr>
                   </tbody>
@@ -70,10 +85,18 @@ const CovidTable = ({ expanded }) => {
                   <tbody>
                     <tr className='text-3xl font-bold'>
                       <td className='covid-stats'>
-                        {formatNumbers(data.deaths.new)}
+                        {loading ? (
+                          <Skeleton type='text' />
+                        ) : (
+                          formatNumbers(data?.deaths?.new)
+                        )}
                       </td>
                       <td className='covid-stats'>
-                        {formatNumbers(data.deaths.total)}
+                        {loading ? (
+                          <Skeleton type='text' />
+                        ) : (
+                          formatNumbers(data?.deaths?.total)
+                        )}
                       </td>
                     </tr>
                   </tbody>
@@ -87,12 +110,18 @@ const CovidTable = ({ expanded }) => {
                   <tbody>
                     <tr className='font-bold text-3xl'>
                       <td className='text-center text-green-600'>
-                        {formatNumbers(data.cases.recovered)}
+                        {loading ? (
+                          <Skeleton type='text' />
+                        ) : (
+                          formatNumbers(data?.cases?.recovered)
+                        )}
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <p className='covid-stats-date'>{data.day}</p>
+                <p className='covid-stats-date'>
+                  {loading ? <Skeleton type='text' /> : data?.day}
+                </p>
               </div>
             );
           })
@@ -103,7 +132,7 @@ const CovidTable = ({ expanded }) => {
                 <div className='px-10 pb-6 flex justify-between items-center'>
                   <CovidCountryInfo
                     country={data.country}
-                    population={formatNumbers(data.population)}
+                    population={formatNumbers(data?.population)}
                   />
                   <Search />
                 </div>
@@ -119,18 +148,32 @@ const CovidTable = ({ expanded }) => {
                   <tbody>
                     <tr className='text-3xl font-bold'>
                       <td className='covid-stats text-red-600'>
-                        {formatNumbers(data.cases.new)}
+                        {loading ? (
+                          <Skeleton type='text' />
+                        ) : (
+                          formatNumbers(data?.cases?.new)
+                        )}
                       </td>
                       <td className='covid-stats'>
-                        {formatNumbers(data.deaths.new)}
+                        {loading ? (
+                          <Skeleton type='text' />
+                        ) : (
+                          formatNumbers(data?.deaths?.new)
+                        )}
                       </td>
                       <td className='covid-stats text-green-600'>
-                        {formatNumbers(data.cases.recovered)}
+                        {loading ? (
+                          <Skeleton type='text' />
+                        ) : (
+                          formatNumbers(data?.cases?.recovered)
+                        )}
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <p className='covid-stats-date'>{data.day}</p>
+                <p className='covid-stats-date'>
+                  {loading ? <Skeleton type='text' /> : data.day}
+                </p>
               </div>
             );
           })}

@@ -13,7 +13,7 @@ const CovidSearch = () => {
   return (
     <form>
       <input
-        className='rounded px-2 py-1 focus:outline text-primary-dark focus:border-primary-dark'
+        className='rounded-full px-2 py-1 focus:outline text-primary-dark focus:border-primary-dark'
         placeholder='Cerca Paese'
         type='text'
         // value={search}

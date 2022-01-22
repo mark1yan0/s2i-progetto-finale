@@ -17,18 +17,18 @@ const Card = ({
   const dispatch = useDispatch();
   const allNews = useSelector(state => state.news.allNews);
   const readLater = useSelector(state => state.news.readLater);
-  //state read more
-  // const [readMore, setReadMore] = useState(false);
+
   //truncate text to make it shorter
   function truncate(str, n, append) {
     return str?.length > n ? str.substr(0, n - 1) + append : str;
   }
 
   function toggleReadLaterHandler() {
-    const targetArticle = allNews?.filter(article => article.id === id);
+    const targetArticle = allNews?.find(article => article.id === id);
     dispatch(toggleReadLater(targetArticle));
   }
   const isReadLater = readLater?.find(article => article.id === id)?.readLater;
+  // const isReadLater = true;
 
   return (
     <div className='bg-secondary-light text-text-dark rounded shadow-md transition sm:transform hover:scale-105'>
@@ -45,7 +45,6 @@ const Card = ({
             {truncate(title, 60, '...')}
           </a>
         </strong>
-        {/* <h1 onClick={() => setReadMore(!readMore)}>Read more</h1> */}
         <p title={description} className='text-sm'>
           {truncate(description, 100, '...')}
         </p>
@@ -57,7 +56,7 @@ const Card = ({
         </a>
       </div>
       <div
-        className={`absolute bottom-4 right-4 cursor-pointer rounded text-text-dark hover:text-text-light hover:bg-primary-dark ${
+        className={`absolute bottom-4 right-4 cursor-pointer rounded-full text-text-dark hover:text-text-light hover:bg-primary-dark ${
           isReadLater && 'bg-primary-dark'
         }`}
         onClick={toggleReadLaterHandler}

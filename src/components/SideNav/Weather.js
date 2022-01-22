@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 import { weatherSelector, fetchWeather } from '../../services/weatherSlice';
+import SnackBar from '../SnackBar';
+import Skeleton from '../Skeleton';
 
 const Weather = () => {
   //weather data
@@ -11,40 +13,62 @@ const Weather = () => {
   useEffect(() => {
     if (weather.length !== 0) return;
     dispatch(fetchWeather('voghera'));
-  }, [dispatch, weather.length]);
+  }, [dispatch]);
 
   return (
     <div className='text-text-light px-6 pb-10'>
-      {loading ? (
-        <p>Loading weather</p>
-      ) : hasErrors ? (
-        <p>An error occured...</p>
+      {hasErrors ? (
+        <SnackBar type='error' message='Could not load weather info' />
       ) : (
         <>
-          <p>
-            <strong>{weather?.location?.name}</strong>
-          </p>
-          <p>
-            <strong>
-              {weather?.location?.region}, {weather?.location?.country}
-            </strong>
-          </p>
+          {loading ? (
+            <Skeleton type='text' />
+          ) : (
+            <p>
+              <strong>{weather?.location?.name}</strong>
+            </p>
+          )}
+          {loading ? (
+            <Skeleton type='text' />
+          ) : (
+            <p>
+              <strong>
+                {weather?.location?.region + ',' + weather?.location?.country}
+              </strong>
+            </p>
+          )}
 
-          <p>{weather?.location?.localtime}</p>
+          {loading ? (
+            <Skeleton type='text' />
+          ) : (
+            <p>{weather?.location?.localtime}</p>
+          )}
           <div className='flex items-center'>
             <div>
-              <p className='text-6xl'>
-                <strong>{weather?.current?.temp_c}</strong>°
-              </p>
-              <p className='text-3xl'>
-                <strong>{weather?.current?.condition.text}</strong>
-              </p>
+              {loading ? (
+                <Skeleton type='text' />
+              ) : (
+                <p className='text-6xl'>
+                  <strong>{weather?.current?.temp_c + '°'}</strong>
+                </p>
+              )}
+              {loading ? (
+                <Skeleton type='text' />
+              ) : (
+                <p className='text-3xl'>
+                  <strong>{weather?.current?.condition?.text}</strong>
+                </p>
+              )}
             </div>
-            <img
-              className='flex-auto'
-              src={weather?.current?.condition.icon}
-              alt={weather?.current?.condition.text}
-            />
+            {loading ? (
+              <Skeleton type='text' />
+            ) : (
+              <img
+                className='flex-auto'
+                src={weather?.current?.condition?.icon}
+                alt={weather?.current?.condition?.text}
+              />
+            )}
           </div>
         </>
       )}

@@ -14,7 +14,9 @@ const initialState = {
     health: [],
     entertainment: [],
   },
-  readLater: [],
+  readLater: localStorage.getItem('readlater')
+    ? JSON.parse(localStorage.getItem('readlater'))
+    : [],
   categories: false,
   sliderNews: [],
 };
@@ -30,7 +32,6 @@ const newsSlice = createSlice({
     },
 
     getNewsSuccess: (state, action) => {
-      state.loading = false;
       state.hasErrors = false;
       state.allNews = state.allNews.concat(action.payload); //copiare tutte le news + quelle nuove
     }, //action -> {payload, type}
@@ -67,48 +68,56 @@ const newsSlice = createSlice({
       );
 
       state.categories = true;
+      state.loading = false;
     },
 
     toggleReadLater: (state, action) => {
-      const addedArticle = action.payload[0];
-      const filteredNews = state.allNews.filter(
-        article => article.id !== addedArticle.id
-      );
-
       const readLaterList = state.readLater;
-
-      const isReadLater = readLaterList.find(
+      const allNewsList = state.allNews;
+      const addedArticle = action.payload;
+      const articleIndex = state.allNews.findIndex(
         article => article.id === addedArticle.id
       );
 
+      const isReadLater = addedArticle?.readLater;
       if (isReadLater) {
-        const removedArticleList = readLaterList.filter(
-          article => article.id !== isReadLater.id
-        );
-        return {
-          ...state,
-          allNews: [
-            ...filteredNews,
-            {
-              ...addedArticle,
-              readLater: false,
-            },
-          ],
-          readLater: [...removedArticleList],
-        };
-      }
-
-      return {
-        ...state,
-        allNews: [
-          {
+        // already in readlater
+        // if i add some article and then days later return to remove it, it wouldn't
+        // find the same article
+        const existisInAllNews = allNewsList.includes(addedArticle);
+        if (existisInAllNews) {
+          allNewsList.splice(articleIndex, 1, {
             ...addedArticle,
-            readLater: true,
-          },
-          ...filteredNews,
-        ],
-        readLater: [...readLaterList, { ...addedArticle, readLater: true }],
-      };
+            readLater: false,
+          });
+        } else {
+          allNewsList.push({
+            ...addedArticle,
+            readLater: false,
+          });
+        }
+        const updatedReadLater = readLaterList.filter(
+          article => article.id !== addedArticle.id
+        );
+
+        localStorage.setItem('readlater', JSON.stringify(updatedReadLater));
+        state.allNews = allNewsList;
+        state.readLater = updatedReadLater;
+      } else {
+        // not in readlater
+        allNewsList.splice(articleIndex, 1, {
+          ...addedArticle,
+          readLater: true,
+        });
+        readLaterList.push({
+          ...addedArticle,
+          readLater: true,
+        });
+
+        localStorage.setItem('readlater', JSON.stringify(readLaterList));
+        state.allNews = allNewsList;
+        state.readLater = readLaterList;
+      }
     },
 
     setSliderNews: (state, action) => {
@@ -141,33 +150,37 @@ export const newsSelector = state => state.news;
 // to do something, and which results in dispatching
 // Redux actions to update the store
 export function fetchNews(country, category, size) {
-  return async dispatch => {
-    dispatch(getNews());
-    try {
-      const res = await axios.get(
-        `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&pageSize=${size}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
-      );
-      //on success pass data to the payload, and so to the store
+  return async (dispatch, getState) => {
+    const loading = getState().news.loading;
+    const user = getState().authentication?.user;
+    if (!loading && user) dispatch(getNews());
+    if (user !== null) {
+      try {
+        const res = await axios.get(
+          `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&pageSize=${size}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
+        );
+        //on success pass data to the payload, and so to the store
 
-      dispatch(
-        getNewsSuccess(
-          res?.data?.articles.map(article => ({
-            title: article.title,
-            description: article.description,
-            date: article.publishedAt,
-            author: article.author,
-            source: article.source?.name,
-            image: article.urlToImage,
-            link: article.url,
-            category: category,
-            id: uuid(),
-            readLater: false,
-          }))
-        )
-      );
-    } catch (error) {
-      //on failure update the store accordingly
-      dispatch(getNewsFailure(error));
+        dispatch(
+          getNewsSuccess(
+            res?.data?.articles.map(article => ({
+              title: article.title,
+              description: article.description,
+              date: article.publishedAt,
+              author: article.author,
+              source: article.source?.name,
+              image: article.urlToImage,
+              link: article.url,
+              category: category,
+              id: uuid(),
+              readLater: false,
+            }))
+          )
+        );
+      } catch (error) {
+        //on failure update the store accordingly
+        dispatch(getNewsFailure(error));
+      }
     }
   };
 }

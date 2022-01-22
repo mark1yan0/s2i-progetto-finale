@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../../services/authSlice';
 //icons
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 //components
@@ -11,6 +13,8 @@ const Login = ({
   setLoginPassword,
   loginHandler,
 }) => {
+  const { loading } = useSelector(userSelector);
+
   return (
     <form className='flex flex-col justify-between' onSubmit={loginHandler}>
       <h1 className='text-center text-4xl font-bold text-primary-dark'>
@@ -37,7 +41,7 @@ const Login = ({
       </div>
 
       <div className='flex justify-end items-center'>
-        <Button text='Accedi' type='submit' primary />
+        <Button text='Accedi' type='submit' primary loading={loading} />
       </div>
     </form>
   );
