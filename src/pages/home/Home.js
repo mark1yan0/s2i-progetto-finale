@@ -1,7 +1,7 @@
 import React from 'react';
 //components
 import NewsSlider from './NewsSlider/NewsSlider';
-import CovidTable from '../../components/CovidStats/CovidTable';
+import CovidTable from '../../components/CovidTable/CovidTable';
 import Grid from '../../components/Articles/Grid';
 import { useSelector } from 'react-redux';
 import { newsSelector } from '../../services/newsSlice';

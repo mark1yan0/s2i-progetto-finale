@@ -64,8 +64,8 @@ const Signup = ({
         Iscriviti
       </h1>
       <p className='text-center text-xs'>
-        Iscriviti per avere la possibilità di salvare i post da leggere più
-        tardi
+        Iscriviti per avere la possibilità <br className='sm:hidden' /> di
+        salvare i post da leggere più tardi
       </p>
 
       <input

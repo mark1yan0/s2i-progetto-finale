@@ -80,7 +80,7 @@ const AuthPage = () => {
 
   return (
     <div className='page-padding'>
-      <section className='w-96 min-h-screen flex flex-col justify-center -mt-10'>
+      <section className='w-70 sm:w-96 min-h-screen flex flex-col justify-center -mt-10'>
         {loginForm ? (
           <>
             <Login

@@ -6,8 +6,8 @@ import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 const SnackBar = ({ message, type }) => {
   const snackBarType =
     type === 'error'
-      ? 'bg-red-500 bottom-5 left-5'
-      : 'bg-green-500 bottom-5 right-5';
+      ? 'bg-red-500 bottom-5 right-5'
+      : 'bg-green-500 top-5 right-5';
 
   return reactDom.createPortal(
     <div

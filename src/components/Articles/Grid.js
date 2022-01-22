@@ -95,7 +95,7 @@ const Grid = ({ country, size, category }) => {
             &nbsp; &nbsp;Vedi tutti
           </p>
         </div>
-        <div className='grid grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
+        <div className='sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
           {newsCategories[category].slice(0, size).map(article => (
             <Card
               image={article?.image}
@@ -115,7 +115,7 @@ const Grid = ({ country, size, category }) => {
       </section>
     ))
   ) : (
-    <section className='grid grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
+    <section className='sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
       {allNews.slice(0, size).map(article => (
         <Card
           image={article?.image}

@@ -16,7 +16,7 @@ const Weather = () => {
   }, []);
 
   return (
-    <div className='text-text-light px-6 pb-10'>
+    <div className='text-text-light md:block px-6 pb-10'>
       {hasErrors ? (
         <SnackBar type='error' message='Could not load weather info' />
       ) : (

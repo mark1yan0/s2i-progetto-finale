@@ -1,6 +1,6 @@
 import React from 'react';
 //components
-import CovidTable from '../../components/CovidStats/CovidTable';
+import CovidTable from '../../components/CovidTable/CovidTable';
 import Grid from '../../components/Articles/Grid';
 
 const CovidPage = () => {

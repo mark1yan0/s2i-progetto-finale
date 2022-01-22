@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CovidSearch = () => {
+const Search = () => {
   // function updateSearch(e) {
   //   setSearch(e.target.value);
   // }
@@ -23,4 +23,4 @@ const CovidSearch = () => {
   );
 };
 
-export default CovidSearch;
+export default Search;

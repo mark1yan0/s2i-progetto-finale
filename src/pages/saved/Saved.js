@@ -9,7 +9,7 @@ const Saved = () => {
   return (
     <div className='page-padding'>
       <h1>Salvati</h1>
-      <div className='grid grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
+      <div className='sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
         {readLater.map(article => (
           <Card
             image={article?.image}

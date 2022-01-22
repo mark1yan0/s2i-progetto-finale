@@ -4,6 +4,10 @@ module.exports = {
     fontFamily: {
       raleway: ['raleway', 'sans-serif'],
     },
+    screens: {
+      sm: '500px',
+      md: '1024px',
+    },
     outline: {
       DEFAULT: '1px solid #3A435E',
     },

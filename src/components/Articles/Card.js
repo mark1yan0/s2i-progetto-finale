@@ -31,7 +31,7 @@ const Card = ({
   // const isReadLater = true;
 
   return (
-    <div className='bg-secondary-light text-text-dark rounded shadow-md transition sm:transform hover:scale-105'>
+    <div className='mb-3 sm:mb-0 bg-secondary-light relative text-text-dark rounded shadow-md transition sm:transform hover:scale-105'>
       <a href={link} target='_'>
         <img
           src={image}
@@ -56,7 +56,7 @@ const Card = ({
         </a>
       </div>
       <div
-        className={`absolute bottom-4 right-4 cursor-pointer rounded-full text-text-dark hover:text-text-light hover:bg-primary-dark ${
+        className={`absolute bottom-5 right-5 cursor-pointer rounded-full text-text-dark hover:text-text-light hover:bg-primary-dark ${
           isReadLater && 'bg-primary-dark'
         }`}
         onClick={toggleReadLaterHandler}

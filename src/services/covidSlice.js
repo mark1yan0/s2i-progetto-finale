@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   hasErrors: false,
-  covidStats: [],
+  full: false,
+  covidStats: {},
 };
 
 const covidSlice = createSlice({
@@ -14,10 +15,11 @@ const covidSlice = createSlice({
     getCovidStats: state => {
       state.loading = true;
     },
-    getCovidStatsSuccess: (state, { payload }) => {
-      state.covidStats = payload;
+    getCovidStatsSuccess: (state, action) => {
+      state.covidStats = action.payload;
       state.loading = false;
       state.hasErrors = false;
+      state.full = true;
     },
     getCovidStatsFailure: (state, error) => {
       state.loading = false;
@@ -50,8 +52,7 @@ export function fetchCovidStats(country) {
 
       try {
         const res = await axios.request(options);
-
-        dispatch(getCovidStatsSuccess(res?.data?.response.splice(0, 1)));
+        dispatch(getCovidStatsSuccess(res?.data?.response[0]));
       } catch (error) {
         dispatch(getCovidStatsFailure(error));
       }

@@ -21,7 +21,7 @@ const App = () => {
       <TopNav />
       <div>
         <SideNav />
-        <main className='pt-20 pb-6 ml-10 sm:ml-72'>
+        <main className='pt-20 pb-6 ml-10 md:ml-72'>
           <Switch>
             <Route path='/auth'>
               <section id='auth' className={layoutStyle}>

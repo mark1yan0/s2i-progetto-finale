@@ -4,9 +4,23 @@ import Button from './Button';
 import { FaUserAlt } from 'react-icons/fa';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { VscLibrary } from 'react-icons/vsc';
+import { auth } from '../firebase-config';
+import { signOut } from 'firebase/auth';
+import { userSignedOut } from '../services/authSlice';
+import { useDispatch } from 'react-redux';
 
-const UserDropDown = ({ logout, userEmail }) => {
+const UserDropDown = ({ userEmail, toggleSidebar }) => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  async function logoutHandler() {
+    try {
+      await signOut(auth);
+      dispatch(userSignedOut());
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const submenu = open ? 'flex flex-col' : 'hidden';
   return (
@@ -24,19 +38,23 @@ const UserDropDown = ({ logout, userEmail }) => {
         <NavLink
           className='hover:bg-gray-100 p-2 rounded flex items-center cursor-pointer'
           to='/saved'
-          onClick={() => setOpen(false)}
+          onClick={() => {
+            setOpen(false);
+            toggleSidebar && toggleSidebar();
+          }}
         >
-          <IoLogOutOutline className='mr-2' />
+          <VscLibrary className='mr-2' />
           Salvati
         </NavLink>
         <li
           className='hover:bg-gray-100 p-2 rounded flex items-center cursor-pointer'
           onClick={() => {
             setOpen(false);
-            logout();
+            logoutHandler();
+            toggleSidebar && toggleSidebar();
           }}
         >
-          <VscLibrary />
+          <IoLogOutOutline />
           <p className='ml-2'>Esci</p>
         </li>
       </ul>
