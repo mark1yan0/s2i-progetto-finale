@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Grid from '../../components/Articles/Grid';
-import Filter from '../../components/Filter';
+// import Filter from '../../components/Filter';
 
 const filterData = [
   'business',
@@ -13,12 +13,12 @@ const filterData = [
 
 const NewsPage = () => {
   // const [filterData, setFilterData] = useState(filterData);
-  const [selectedFilter, setSelectedFilter] = useState('');
+  // const [selectedFilter, setSelectedFilter] = useState('');
 
   return (
     <div className='page-padding'>
       <h1>NewsPage</h1>
-      <section className='flex justify-between'>
+      {/* <section className='flex justify-between'>
         {filterData.map(filter => (
           <Filter
             key={filter}
@@ -27,8 +27,8 @@ const NewsPage = () => {
             setSelectedFilter={setSelectedFilter}
           />
         ))}
-      </section>
-      <Grid country='it' size='9' filter={selectedFilter} />
+      </section> */}
+      <Grid country='it' size='9' />
     </div>
   );
 };
