@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import FiltersContainer from '../../components/Filters/FiltersContainer';
 import Card from '../../components/Articles/Card';
@@ -9,7 +9,7 @@ const Saved = () => {
   const [selectedFilter, setSelectedFilter] = useState('');
 
   return (
-    <div className='page-padding'>
+    <div className='page-wrapper'>
       <h1>Salvati</h1>
       <FiltersContainer
         selectedFilter={selectedFilter}

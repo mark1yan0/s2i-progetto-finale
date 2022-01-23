@@ -6,8 +6,8 @@
 
 @layer components {
   /* page padding */
-  .page-padding {
-    @apply px-6;
+  .page-wrapper {
+    @apply w-full px-2 md:px-6;
   }
 
   /*covid table*/

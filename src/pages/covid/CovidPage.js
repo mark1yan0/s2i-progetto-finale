@@ -5,7 +5,7 @@ import Grid from '../../components/Articles/Grid';
 
 const CovidPage = () => {
   return (
-    <div className='w-full page-padding'>
+    <div className='page-wrapper'>
       <h1>CovidPage</h1>
 
       <CovidTable expanded />

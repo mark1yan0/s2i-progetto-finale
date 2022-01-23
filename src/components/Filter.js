@@ -26,7 +26,7 @@ const Filter = ({
         handleFilters(filter, !selected);
       }}
     >
-      {filter}
+      <p className='text-center'>{filter}</p>
     </div>
   );
 };

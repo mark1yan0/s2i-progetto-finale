@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 //components
 import NewsSlider from './NewsSlider/NewsSlider';
 import CovidTable from '../../components/CovidTable/CovidTable';
@@ -11,15 +11,23 @@ import Skeleton from '../../components/Skeleton';
 const Home = () => {
   const { loading, hasErrors } = useSelector(newsSelector);
 
+  const [snackbar, setSnackbar] = useState(false);
+  useEffect(() => {
+    if (hasErrors) {
+      setSnackbar(true);
+      setTimeout(() => setSnackbar(false), 2000);
+    }
+  }, []);
+
   return (
     <>
       {loading && <Skeleton type='box' />}
-      {hasErrors && <SnackBar type='error' message='Could not load Slider' />}
+      {snackbar && <SnackBar type='error' message='Could not load Slider' />}
       {!loading && !hasErrors && <NewsSlider />}
-      <div className='w-full page-padding'>
+      <div className='page-wrapper'>
         <CovidTable />
         {loading && <Skeleton type='box' />}
-        {hasErrors && <SnackBar type='error' message='Could not load news' />}
+        {snackbar && <SnackBar type='error' message='Could not load news' />}
         {!loading && <Grid country='it' category size='3' />}
       </div>
     </>

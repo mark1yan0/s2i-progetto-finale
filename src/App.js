@@ -14,7 +14,7 @@ import AuthPage from './pages/auth/AuthPage';
 import Saved from './pages/saved/Saved';
 
 const App = () => {
-  const layoutStyle = 'flex flex-col items-center w-full';
+  const layoutStyle = 'flex flex-col items-center min-h-screen';
 
   return (
     <div className='relative'>
