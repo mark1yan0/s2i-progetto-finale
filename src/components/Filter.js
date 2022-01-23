@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const Filter = ({ filter, selectedFilter, setSelectedFilter }) => {
-  const [selected, setSelected] = useState(false);
-
+const Filter = ({
+  filter,
+  selectedFilter,
+  selected,
+  setSelected,
+  handleFilters,
+}) => {
+  function handleSelcted() {
+    if (selectedFilter !== filter) {
+      setSelected(true);
+    } else {
+      setSelected(false);
+    }
+  }
   return (
     <div
       className={`${
-        selected ? 'bg-primary-light text-white' : 'bg-secondary-light'
+        selectedFilter === filter && selected
+          ? 'bg-primary-light text-white'
+          : 'bg-secondary-light'
       } py-1 px-2 rounded-full cursor-pointer`}
-      // onClick={handleToggle}
+      onClick={() => {
+        handleSelcted();
+        handleFilters(filter, !selected);
+      }}
     >
       {filter}
     </div>

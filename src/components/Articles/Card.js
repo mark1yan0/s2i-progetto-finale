@@ -44,7 +44,7 @@ const Card = ({
           className='object-cover rounded-t w-full h-60'
         />
       </a>
-      <div className=' rounded-b p-4 h-70 relative'>
+      <div className=' rounded-b p-4 h-70 relative hover:text-primary-dark'>
         <strong title={title}>
           <a href={link} target='_' className='text-xl'>
             {truncate(title, 60, '...')}
