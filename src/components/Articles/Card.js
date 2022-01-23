@@ -24,7 +24,12 @@ const Card = ({
   }
 
   function toggleReadLaterHandler() {
-    const targetArticle = allNews?.find(article => article.id === id);
+    let targetArticle = allNews?.find(article => article.id === id);
+    if (!targetArticle) {
+      targetArticle = JSON.parse(localStorage.getItem('readlater')).find(
+        article => article.id === id
+      );
+    }
     dispatch(toggleReadLater(targetArticle));
   }
   const isReadLater = readLater?.find(article => article.id === id)?.readLater;

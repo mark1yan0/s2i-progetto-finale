@@ -12,12 +12,7 @@ const useNews = (country, size) => {
   useEffect(() => {
     if (allNews.length !== 0 || hasErrors) return;
     async function getNews() {
-      await dispatch(fetchNews(country, 'business', size)); //country in 'it' form
-      await dispatch(fetchNews(country, 'science', size));
-      await dispatch(fetchNews(country, 'technology', size));
-      await dispatch(fetchNews(country, 'sports', size));
-      await dispatch(fetchNews(country, 'health', size));
-      await dispatch(fetchNews(country, 'entertainment', size));
+      await dispatch(fetchNews(country, size)); //country in 'it' form
       //filter categories once done fetching
       await dispatch(setCategories(allNews));
     }
