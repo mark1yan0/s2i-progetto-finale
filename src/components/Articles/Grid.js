@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { useHistory } from 'react-router';
 import useNews from '../../hooks/useNews';
 import { useSelector } from 'react-redux';
 //components
-import Card from './Card';
+import Skeleton from '../Skeleton';
 import FiltersContainer from '../Filters/FiltersContainer';
+const Card = lazy(() => import('./Card'));
 
-const Grid = ({ country, size, category, filters }) => {
+const Grid = ({ country, size, category, filters, covidpage }) => {
   const history = useHistory();
   const { hasErrors } = useSelector(state => state.news);
   const { allNews, newsCategories } = useNews(country, 8);
 
-  const [articles, setArticles] = useState(allNews);
+  const covidCategory = newsCategories.covid;
+  const [articles, setArticles] = useState(covidpage ? covidCategory : allNews);
   const [selectedFilter, setSelectedFilter] = useState('');
 
   //condiitonal logic
@@ -29,19 +31,23 @@ const Grid = ({ country, size, category, filters }) => {
         </div>
         <div className='sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
           {newsCategories[category].slice(0, size).map(article => (
-            <Card
-              image={article?.image}
-              link={article?.link}
-              title={article?.title}
-              description={article?.description}
-              author={article?.author}
-              date={article?.date}
-              source={article?.source}
+            <Suspense
               key={article?.id}
-              id={article?.id}
-              category={article?.category}
-              readLater={article?.readLater}
-            />
+              fallback={<Skeleton type='box' height={300} />}
+            >
+              <Card
+                image={article?.image}
+                link={article?.link}
+                title={article?.title}
+                description={article?.description}
+                author={article?.author}
+                date={article?.date}
+                source={article?.source}
+                id={article?.id}
+                category={article?.category}
+                readLater={article?.readLater}
+              />
+            </Suspense>
           ))}
         </div>
       </section>
@@ -49,19 +55,23 @@ const Grid = ({ country, size, category, filters }) => {
   ) : (
     <section className='sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
       {articles.map(article => (
-        <Card
-          image={article?.image}
-          link={article?.link}
-          title={article?.title}
-          description={article?.description}
-          author={article?.author}
-          date={article?.date}
-          source={article?.source}
+        <Suspense
           key={article?.id}
-          id={article?.id}
-          category={article?.category}
-          readLater={article?.readLater}
-        />
+          fallback={<Skeleton type='box' height={300} />}
+        >
+          <Card
+            image={article?.image}
+            link={article?.link}
+            title={article?.title}
+            description={article?.description}
+            author={article?.author}
+            date={article?.date}
+            source={article?.source}
+            id={article?.id}
+            category={article?.category}
+            readLater={article?.readLater}
+          />
+        </Suspense>
       ))}
     </section>
   );

@@ -13,6 +13,7 @@ const initialState = {
     sports: [],
     health: [],
     entertainment: [],
+    covid: [],
   },
   readLater: localStorage.getItem('readlater')
     ? JSON.parse(localStorage.getItem('readlater'))
@@ -67,6 +68,10 @@ const newsSlice = createSlice({
 
       state.newsCategories.entertainment = state.allNews.filter(
         article => article.category === 'entertainment'
+      );
+
+      state.newsCategories.covid = state.allNews.filter(
+        article => article.category === 'covid'
       );
 
       state.categories = true;
@@ -262,6 +267,24 @@ export function fetchNews(country, size) {
           id: uuid(),
           readLater: false,
         }));
+
+        const covidRes = await axios.get(
+          `https://newsapi.org/v2/top-headlines?country=${country}&p=Coronavirus&pageSize=6&apiKey=${process.env.REACT_APP_NEWS_KEY}`
+        );
+
+        const covid = covidRes?.data?.articles.map(article => ({
+          title: article.title,
+          description: article.description,
+          date: article.publishedAt,
+          author: article.author,
+          source: article.source?.name,
+          image: article.urlToImage,
+          link: article.url,
+          category: 'covid',
+          id: uuid(),
+          readLater: false,
+        }));
+
         let payload = [
           ...business,
           ...science,
@@ -269,6 +292,7 @@ export function fetchNews(country, size) {
           ...sports,
           ...health,
           ...entertainment,
+          ...covid,
         ];
 
         // when reloading replace localstorage items into allNews

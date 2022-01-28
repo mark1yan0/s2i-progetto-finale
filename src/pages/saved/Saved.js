@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import FiltersContainer from '../../components/Filters/FiltersContainer';
-import Card from '../../components/Articles/Card';
+import Skeleton from '../../components/Skeleton';
+const Card = lazy(() => import('../../components/Articles/Card'));
 
 const Saved = () => {
   const { readLater } = useSelector(state => state.news);
@@ -28,19 +29,23 @@ const Saved = () => {
       <div className='sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7 py-4'>
         {articles.length !== 0 &&
           articles.map(article => (
-            <Card
-              image={article?.image}
-              link={article?.link}
-              title={article?.title}
-              description={article?.description}
-              author={article?.author}
-              date={article?.date}
-              source={article?.source}
+            <Suspense
               key={article?.id}
-              id={article?.id}
-              category={article?.category}
-              readLater={article?.readLater}
-            />
+              fallback={<Skeleton type='box' height={300} />}
+            >
+              <Card
+                image={article?.image}
+                link={article?.link}
+                title={article?.title}
+                description={article?.description}
+                author={article?.author}
+                date={article?.date}
+                source={article?.source}
+                id={article?.id}
+                category={article?.category}
+                readLater={article?.readLater}
+              />
+            </Suspense>
           ))}
       </div>
       {articles.length === 0 && emptyPage}

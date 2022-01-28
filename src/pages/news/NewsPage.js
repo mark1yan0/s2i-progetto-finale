@@ -11,7 +11,7 @@ const NewsPage = () => {
     <div className='page-wrapper'>
       {loading && <Skeleton type='box' height='100vh' />}
       {snackbar && <SnackBar type='error' message='Could not load news' />}
-      {!loading && !hasErrors && <Grid country='it' size='9' filters />}
+      {!loading && <Grid country='it' size='9' filters />}
     </div>
   );
 };

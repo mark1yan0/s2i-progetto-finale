@@ -10,6 +10,7 @@ import useLoading from '../../hooks/useLoading';
 
 const Home = () => {
   const [loading, hasErrors, snackbar] = useLoading(newsSelector);
+  console.log(hasErrors);
 
   return (
     <>
@@ -20,7 +21,7 @@ const Home = () => {
         <CovidTable />
         {loading && <Skeleton type='box' height='100vh' />}
         {snackbar && <SnackBar type='error' message='Could not load news' />}
-        {!loading && !hasErrors && <Grid country='it' category size='3' />}
+        {!loading && <Grid country='it' category size='3' />}
       </div>
     </>
   );
