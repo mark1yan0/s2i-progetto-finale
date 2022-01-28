@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Filter from '../Filter';
+import Filter from './Filter';
 import { FaFilter } from 'react-icons/fa';
 import { FiFilter } from 'react-icons/fi';
 
