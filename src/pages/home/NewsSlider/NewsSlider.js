@@ -37,7 +37,7 @@ const NewsSlider = () => {
                   'linear-gradient(0deg, rgba(0,0,64,0.8) 10%, rgba(65,62,124,0.8015581232492998) 85%)',
               }}
             >
-              <div>
+              <div className='w-full'>
                 <a href={article?.link} target='_blank'>
                   <h1 className='text-xl md:text-3xl'>
                     <strong>{article?.title} </strong>

@@ -27,7 +27,8 @@ export const SideNav = () => {
       }`}
       style={{ zIndex: 100 }}
     >
-      <Backdrop hidden={!openSidebar} setOpenSidebar={setOpenSidebar} />
+      {openSidebar && <Backdrop setOpenSidebar={setOpenSidebar} />}
+
       <h1
         className={`md:hidden py-3 cursor-pointer text-text-light hover:bg-primary-light text-xl ${
           openSidebar ? 'px-6' : 'pl-2'
@@ -44,7 +45,7 @@ export const SideNav = () => {
         {/* //links */}
         <div className={`flex flex-col justify-between text-text-light `}>
           <NavLink
-            onClick={toggleSidebarHandler}
+            onClick={() => setOpenSidebar(false)}
             className='px-6 py-2 hover:bg-primary-light'
             activeStyle={{ background: '#fff', color: '#3A435E' }}
             exact
@@ -53,7 +54,7 @@ export const SideNav = () => {
             Home
           </NavLink>
           <NavLink
-            onClick={toggleSidebarHandler}
+            onClick={() => setOpenSidebar(false)}
             className='px-6 py-2 hover:bg-primary-light'
             activeStyle={{ background: '#fff', color: '#3A435E' }}
             to='/news'
@@ -61,7 +62,7 @@ export const SideNav = () => {
             News
           </NavLink>
           <NavLink
-            onClick={toggleSidebarHandler}
+            onClick={() => setOpenSidebar(false)}
             className='px-6 py-2 hover:bg-primary-light'
             activeStyle={{ background: '#fff', color: '#3A435E' }}
             to='/covid'
@@ -73,7 +74,7 @@ export const SideNav = () => {
             {user && (
               <UserDropDown
                 userEmail={user?.email}
-                toggleSidebar={toggleSidebarHandler}
+                toggleSidebar={() => setOpenSidebar(false)}
               />
             )}
           </div>

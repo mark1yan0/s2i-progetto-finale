@@ -18,7 +18,7 @@ const Saved = () => {
 
   return (
     <div className='page-wrapper'>
-      <h1>Salvati</h1>
+      <h1 className='text-xl'>La mia Libreria</h1>
       <FiltersContainer
         selectedFilter={selectedFilter}
         items={readLater} // direct redux state

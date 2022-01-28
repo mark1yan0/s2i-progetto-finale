@@ -19,8 +19,9 @@ const Filter = ({
       className={`${
         selectedFilter === filter && selected
           ? 'bg-primary-light text-white'
-          : 'bg-secondary-light'
+          : 'bg-secondary-light text-text-dark'
       } py-1 px-2 rounded-full cursor-pointer`}
+      style={{ border: '1px solid #3A435E' }}
       onClick={() => {
         handleSelcted();
         handleFilters(filter, !selected);

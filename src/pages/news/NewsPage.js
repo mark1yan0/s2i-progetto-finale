@@ -9,7 +9,6 @@ const NewsPage = () => {
   const [loading, hasErrors, snackbar] = useLoading(newsSelector);
   return (
     <div className='page-wrapper'>
-      <h1>NewsPage</h1>
       {loading && <Skeleton type='box' height='100vh' />}
       {snackbar && <SnackBar type='error' message='Could not load news' />}
       {!loading && !hasErrors && <Grid country='it' size='9' filters />}

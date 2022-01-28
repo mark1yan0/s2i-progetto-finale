@@ -47,7 +47,7 @@ const UserDropDown = ({ userEmail, toggleSidebar }) => {
           }}
         >
           <VscLibrary className='mr-2' />
-          Salvati
+          La mia Libreria
           {readLater.length > 0 && (
             <span className='ml-2 px-2 rounded-full text-text-light bg-primary-dark'>
               {readLater.length}
