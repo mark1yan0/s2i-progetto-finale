@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Filter from '../Filter';
 import { FaFilter } from 'react-icons/fa';
+import { FiFilter } from 'react-icons/fi';
 
 const categories = [
   'business',
@@ -26,6 +27,13 @@ const FiltersContainer = ({
     setSelected(false);
   }, [items]);
 
+  useEffect(() => {
+    if (!showFilter) {
+      setItems(items);
+      setSelectedFilter('');
+    }
+  }, [showFilter]);
+
   function handleFilters(category, selected) {
     if (selected) {
       setItems(items.filter(item => item.category === category));
@@ -41,13 +49,22 @@ const FiltersContainer = ({
     }
   }
 
+  function handleToggleFilter() {
+    setShowFilter(!showFilter);
+  }
+
   return (
     <>
       <span
         className='text-primary-dark hover:text-primary-light text-xl cursor-pointer flex items-center my-2'
-        onClick={() => setShowFilter(!showFilter)}
+        onClick={handleToggleFilter}
       >
-        <FaFilter className='mr-2' /> Filtra
+        {showFilter ? (
+          <FaFilter className='mr-2' />
+        ) : (
+          <FiFilter className='mr-2' />
+        )}
+        Filtra
       </span>
       <div className='grid grid-cols-2 sm:grid-cols-3 gap-1 md:flex md:justify-between '>
         {showFilter &&

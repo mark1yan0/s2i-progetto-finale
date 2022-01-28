@@ -67,9 +67,12 @@ const Card = ({
         onClick={toggleReadLaterHandler}
       >
         {isReadLater ? (
-          <AiOutlineMinus className='text-3xl text-text-light' />
+          <AiOutlineMinus
+            title='Rimuovi dalla libreria'
+            className='text-3xl text-text-light'
+          />
         ) : (
-          <AiOutlinePlus className='text-3xl' />
+          <AiOutlinePlus title='Aggiungi alla libreria' className='text-3xl' />
         )}
       </div>
     </div>

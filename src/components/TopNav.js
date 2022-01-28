@@ -41,8 +41,8 @@ const TopNav = () => {
 
   return (
     <nav
-      className='w-full fixed top-0 bg-primary-dark z-10 flex justify-between items-center px-6 py-3 text-text-light'
-      style={{ zIndex: 11 }}
+      className='w-full fixed top-0 bg-primary-dark z-10 flex justify-between items-center px-2 sm:px-6 py-3 text-text-light'
+      style={{ zIndex: 110 }}
     >
       <h1>
         <NavLink className='text-5xl' exact to='/'>

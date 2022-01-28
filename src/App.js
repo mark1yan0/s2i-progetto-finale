@@ -14,7 +14,7 @@ import AuthPage from './pages/auth/AuthPage';
 import Saved from './pages/saved/Saved';
 
 const App = () => {
-  const layoutStyle = 'flex flex-col items-center min-h-screen';
+  const baseSectionStyle = 'flex flex-col items-center min-h-screen';
 
   return (
     <div className='relative'>
@@ -24,27 +24,27 @@ const App = () => {
         <main className='pt-20 pb-6 ml-10 md:ml-72'>
           <Switch>
             <Route path='/auth'>
-              <section id='auth' className={layoutStyle}>
+              <section id='auth' className={baseSectionStyle}>
                 <AuthPage />
               </section>
             </Route>
             <PrivateRoute exact path='/'>
-              <section id='home' className={layoutStyle}>
+              <section id='home' className={baseSectionStyle}>
                 <Home />
               </section>
             </PrivateRoute>
             <PrivateRoute path='/news'>
-              <section id='news' className={layoutStyle}>
+              <section id='news' className={baseSectionStyle}>
                 <NewsPage />
               </section>
             </PrivateRoute>
             <PrivateRoute path='/covid'>
-              <section id='covid' className={layoutStyle}>
+              <section id='covid' className={baseSectionStyle}>
                 <CovidPage />
               </section>
             </PrivateRoute>
             <PrivateRoute path='/saved'>
-              <section id='saved' className={layoutStyle}>
+              <section id='saved' className={baseSectionStyle}>
                 <Saved />
               </section>
             </PrivateRoute>

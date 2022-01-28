@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Weather from './Weather';
 import { useSelector } from 'react-redux';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdOutlineClose } from 'react-icons/md';
+import Backdrop from './Backdrop';
 import UserDropDown from '../UserDropDown';
 
 export const SideNav = () => {
   //sidebar state
   const [openSidebar, setOpenSidebar] = useState(false);
-  console.log();
   const { user } = useSelector(state => state.user);
 
   function toggleSidebarHandler() {
@@ -25,8 +25,9 @@ export const SideNav = () => {
       className={`fixed top-0 left-0 h-screen bg-primary-dark pt-19 w-10 md:w-72 ${
         openSidebar && 'w-72'
       }`}
-      style={{ zIndex: 10 }}
+      style={{ zIndex: 100 }}
     >
+      <Backdrop hidden={!openSidebar} setOpenSidebar={setOpenSidebar} />
       <h1
         className={`md:hidden py-3 cursor-pointer text-text-light hover:bg-primary-light text-xl ${
           openSidebar ? 'px-6' : 'pl-2'

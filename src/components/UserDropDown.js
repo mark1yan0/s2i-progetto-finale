@@ -6,12 +6,15 @@ import { IoLogOutOutline } from 'react-icons/io5';
 import { VscLibrary } from 'react-icons/vsc';
 import { auth } from '../firebase-config';
 import { signOut } from 'firebase/auth';
+import { useSelector } from 'react-redux';
 import { userSignedOut } from '../services/authSlice';
 import { useDispatch } from 'react-redux';
+import { newsSelector } from '../services/newsSlice';
 
 const UserDropDown = ({ userEmail, toggleSidebar }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+  const { readLater } = useSelector(newsSelector);
 
   async function logoutHandler() {
     try {
@@ -45,6 +48,11 @@ const UserDropDown = ({ userEmail, toggleSidebar }) => {
         >
           <VscLibrary className='mr-2' />
           Salvati
+          {readLater.length > 0 && (
+            <span className='ml-2 px-2 rounded-full text-text-light bg-primary-dark'>
+              {readLater.length}
+            </span>
+          )}
         </NavLink>
         <li
           className='hover:bg-gray-100 p-2 rounded flex items-center cursor-pointer'

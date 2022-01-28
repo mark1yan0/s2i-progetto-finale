@@ -5,9 +5,10 @@
 @tailwind utilities;
 
 @layer components {
-  /* page padding */
+  /* page wrapper */
   .page-wrapper {
     @apply w-full px-2 md:px-6;
+    max-width: 1024px;
   }
 
   /*covid table*/

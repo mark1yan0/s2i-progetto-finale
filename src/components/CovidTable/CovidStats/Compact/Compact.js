@@ -9,7 +9,7 @@ import Skeleton from '../../../Skeleton';
 const Compact = ({ covidStats, loading }) => {
   return (
     <div className='relative px-1 md:px-10' key={uuid()}>
-      <div className='pb-6 flex justify-between items-center'>
+      <div className='pb-6 flex flex-col sm:flex-row justify-between items-center'>
         <CovidCountryInfo
           country={covidStats?.country}
           population={formatNumbers(covidStats?.population)}
