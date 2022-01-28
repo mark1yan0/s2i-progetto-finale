@@ -25,6 +25,7 @@ const FiltersContainer = ({
     setItems(items);
     setSelectedFilter();
     setSelected(false);
+    // eslint-disable-next-line
   }, [items]);
 
   useEffect(() => {
@@ -32,7 +33,8 @@ const FiltersContainer = ({
       setItems(items);
       setSelectedFilter('');
     }
-  }, [showFilter]);
+    // eslint-disable-next-line
+  }, [showFilter, items]);
 
   function handleFilters(category, selected) {
     if (selected) {

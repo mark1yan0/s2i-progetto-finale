@@ -37,6 +37,7 @@ const TopNav = () => {
     } catch (error) {
       dispatch(getCurrentUserFailure());
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -13,7 +13,7 @@ const Weather = () => {
   useEffect(() => {
     if (weather.length !== 0) return;
     dispatch(fetchWeather('voghera'));
-  }, []);
+  }, [weather, dispatch]);
 
   return (
     <div className='text-text-light md:block px-6 pb-10'>

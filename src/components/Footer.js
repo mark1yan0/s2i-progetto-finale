@@ -12,6 +12,7 @@ const Footer = () => {
           className='hover:text-gray-300'
           href='https://github.com/mark1yan0'
           target='_blank'
+          rel='noreferrer nofollow'
         >
           GitHub
         </a>{' '}
@@ -20,6 +21,7 @@ const Footer = () => {
           className='hover:text-gray-300'
           href='https://mark1yan0.github.io/portfolio-repo/'
           target='_blank'
+          rel='noreferrer nofollow'
         >
           Portfolio
         </a>{' '}
@@ -28,6 +30,7 @@ const Footer = () => {
           className='hover:text-gray-300'
           href='https://www.instagram.com/markkmit/'
           target='_blank'
+          rel='noreferrer nofollow'
         >
           Instagram
         </a>

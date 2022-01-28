@@ -18,7 +18,7 @@ const useNews = (country, size) => {
     }
 
     getNews();
-  }, []);
+  }, [allNews, hasErrors, country, size, dispatch]);
 
   useSliderNews();
 

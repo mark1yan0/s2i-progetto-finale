@@ -14,7 +14,7 @@ const CovidTable = ({ expanded }) => {
   useEffect(() => {
     if (full) return;
     dispatch(fetchCovidStats('italy')); //country in english
-  }, []);
+  }, [full, dispatch]);
 
   return (
     <section className='w-full bg-secondary-dark py-1 md:py-6 my-2'>

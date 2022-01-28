@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 const useLoading = selector => {
@@ -10,7 +10,7 @@ const useLoading = selector => {
       setSnackbar(true);
       setTimeout(() => setSnackbar(false), 2000);
     }
-  }, []);
+  }, [hasErrors]);
 
   if (loading === undefined || hasErrors === undefined) {
     console.log('Invalid Selector');

@@ -38,7 +38,11 @@ const NewsSlider = () => {
               }}
             >
               <div className='w-full'>
-                <a href={article?.link} target='_blank'>
+                <a
+                  href={article?.link}
+                  target='_blank'
+                  rel='nofollow noreferrer'
+                >
                   <h1 className='text-xl md:text-3xl'>
                     <strong>{article?.title} </strong>
                   </h1>
@@ -57,6 +61,7 @@ const NewsSlider = () => {
                   className='z-10 text-gray-400'
                   href={`https://${article?.source}`}
                   target='_blank'
+                  rel='nofollow noreferrer'
                 >
                   {article?.source.toLowerCase()}
                 </a>

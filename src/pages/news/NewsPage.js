@@ -6,7 +6,7 @@ import SnackBar from '../../components/SnackBar';
 import Skeleton from '../../components/Skeleton';
 
 const NewsPage = () => {
-  const [loading, hasErrors, snackbar] = useLoading(newsSelector);
+  const [loading, snackbar] = useLoading(newsSelector);
   return (
     <div className='page-wrapper'>
       {loading && <Skeleton type='box' height='100vh' />}
