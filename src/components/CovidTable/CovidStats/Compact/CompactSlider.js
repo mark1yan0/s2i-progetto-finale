@@ -1,12 +1,12 @@
 import React from 'react';
 import Slider from '@farbenmeer/react-spring-slider';
-import Skeleton from '../../../Skeleton';
+import CovidStatistic from '../CovidStatistic';
 
-const CompactSlider = ({ covidStats, formatNumbers, loading }) => {
+const CompactSlider = ({ covidStats, loading }) => {
   return (
-    <div style={{ height: 100, width: '100%' }} className='sm:hidden'>
-      <Slider auto='5000'>
-        <table className='flex flex-col items-center'>
+    <div style={{ height: 100, width: '100%' }} className='mb-5 sm:hidden'>
+      <Slider>
+        <table className='flex flex-col items-center w-full'>
           <thead>
             <tr className='font-normal'>
               <th className='text-center'>Nuovi Positivi</th>
@@ -14,13 +14,11 @@ const CompactSlider = ({ covidStats, formatNumbers, loading }) => {
           </thead>
           <tbody>
             <tr className='text-3xl font-bold'>
-              <td className='covid-stats text-red-600'>
-                {loading ? (
-                  <Skeleton type='text' />
-                ) : (
-                  formatNumbers(covidStats?.cases?.new)
-                )}
-              </td>
+              <CovidStatistic
+                loading={loading}
+                data={covidStats?.cases?.new}
+                color='red'
+              />
             </tr>
           </tbody>
         </table>
@@ -33,13 +31,10 @@ const CompactSlider = ({ covidStats, formatNumbers, loading }) => {
           </thead>
           <tbody>
             <tr className='text-3xl font-bold'>
-              <td className='covid-stats'>
-                {loading ? (
-                  <Skeleton type='text' />
-                ) : (
-                  formatNumbers(covidStats?.deaths?.new)
-                )}
-              </td>
+              <CovidStatistic
+                loading={loading}
+                data={covidStats?.deaths?.new}
+              />
             </tr>
           </tbody>
         </table>
@@ -52,13 +47,11 @@ const CompactSlider = ({ covidStats, formatNumbers, loading }) => {
           </thead>
           <tbody>
             <tr className='text-3xl font-bold'>
-              <td className='covid-stats text-green-600'>
-                {loading ? (
-                  <Skeleton type='text' />
-                ) : (
-                  formatNumbers(covidStats?.cases?.recovered)
-                )}
-              </td>
+              <CovidStatistic
+                loading={loading}
+                data={covidStats?.cases?.recovered}
+                color='green'
+              />
             </tr>
           </tbody>
         </table>

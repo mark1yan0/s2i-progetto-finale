@@ -1,28 +1,23 @@
 import React from 'react';
-import uuid from 'react-uuid';
 import CompactSlider from './CompactSlider';
-import formatNumbers from '../../../../utilities/formatNumbers';
+import CovidStatistic from '../CovidStatistic';
 import CovidCountryInfo from '../CovidCountryInfo';
 import Search from '../../../Search';
 import Skeleton from '../../../Skeleton';
 
 const Compact = ({ covidStats, loading }) => {
   return (
-    <div className='relative px-1 md:px-10' key={uuid()}>
+    <div className='relative px-5 md:px-10'>
       <div className='pb-6 flex flex-col sm:flex-row justify-between items-center'>
         <CovidCountryInfo
           country={covidStats?.country}
-          population={formatNumbers(covidStats?.population)}
+          population={covidStats?.population}
         />
         <Search />
       </div>
 
       {/* responsive slider */}
-      <CompactSlider
-        covidStats={covidStats}
-        formatNumbers={formatNumbers}
-        loading={loading}
-      />
+      <CompactSlider covidStats={covidStats} loading={loading} />
 
       {/* desktop view */}
       <table className='w-full hidden sm:table'>
@@ -35,35 +30,27 @@ const Compact = ({ covidStats, loading }) => {
         </thead>
         <tbody>
           <tr className='text-3xl font-bold'>
-            <td className='covid-stats text-red-600'>
-              {loading ? (
-                <Skeleton type='text' />
-              ) : (
-                formatNumbers(covidStats?.cases?.new)
-              )}
-            </td>
-            <td className='covid-stats'>
-              {loading ? (
-                <Skeleton type='text' />
-              ) : (
-                formatNumbers(covidStats?.deaths?.new)
-              )}
-            </td>
-            <td className='covid-stats text-green-600'>
-              {loading ? (
-                <Skeleton type='text' />
-              ) : (
-                formatNumbers(covidStats?.cases?.recovered)
-              )}
-            </td>
+            <CovidStatistic
+              loading={loading}
+              data={covidStats?.cases?.new}
+              color='red'
+            />
+            <CovidStatistic loading={loading} data={covidStats?.deaths?.new} />
+            <CovidStatistic
+              loading={loading}
+              data={covidStats?.cases?.recovered}
+              color='green'
+            />
           </tr>
         </tbody>
       </table>
-      {loading ? (
-        <Skeleton type='text' />
-      ) : (
-        <p className='covid-stats-date'>{covidStats.day}</p>
-      )}
+      <div className='covid-stats-date'>
+        {loading ? (
+          <Skeleton type='text' align='right' />
+        ) : (
+          <p className='text-right'>{covidStats?.day}</p>
+        )}
+      </div>
     </div>
   );
 };

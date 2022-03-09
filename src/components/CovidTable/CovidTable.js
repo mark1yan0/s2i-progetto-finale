@@ -1,21 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 //redux
-import { useSelector, useDispatch } from 'react-redux';
-import { covidSelector, fetchCovidStats } from '../../services/covidSlice';
+import { useSelector } from 'react-redux';
+import { covidSelector } from '../../services/covidSlice';
 //components
 import Expanded from './CovidStats/Expanded/Expanded';
 import Compact from './CovidStats/Compact/Compact';
 import SnackBar from '../SnackBar';
 
 const CovidTable = ({ expanded }) => {
-  const dispatch = useDispatch();
-  const { covidStats, full, loading, hasErrors } = useSelector(covidSelector);
-
-  useEffect(() => {
-    if (full) return;
-    dispatch(fetchCovidStats('italy')); //country in english
-  }, [full, dispatch]);
-
+  const { covidStats, loading, hasErrors } = useSelector(covidSelector);
   return (
     <section className='w-full bg-secondary-dark py-1 md:py-6 my-2'>
       {hasErrors && <SnackBar type='error' message='Could not load data' />}

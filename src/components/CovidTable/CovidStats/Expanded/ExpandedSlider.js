@@ -1,10 +1,10 @@
 import React from 'react';
 import Slider from '@farbenmeer/react-spring-slider';
-import Skeleton from '../../../Skeleton';
+import CovidStatistic from '../CovidStatistic';
 
-const ExpandedSlider = ({ covidStats, formatNumbers, loading }) => {
+const ExpandedSlider = ({ covidStats, loading }) => {
   return (
-    <div style={{ height: 310, width: '100%' }} className='sm:hidden'>
+    <div style={{ height: 310, width: '100%' }} className='mb-5 sm:hidden'>
       <Slider auto='5000'>
         <div>
           <table className='flex flex-col items-center'>
@@ -15,13 +15,11 @@ const ExpandedSlider = ({ covidStats, formatNumbers, loading }) => {
             </thead>
             <tbody>
               <tr className='text-3xl font-bold'>
-                <td className='covid-stats text-red-600'>
-                  {loading ? (
-                    <Skeleton type='text' />
-                  ) : (
-                    formatNumbers(covidStats?.cases?.new)
-                  )}
-                </td>
+                <CovidStatistic
+                  loading={loading}
+                  data={covidStats?.cases?.new}
+                  color='red'
+                />
               </tr>
             </tbody>
           </table>
@@ -34,13 +32,10 @@ const ExpandedSlider = ({ covidStats, formatNumbers, loading }) => {
             </thead>
             <tbody>
               <tr className='text-3xl font-bold'>
-                <td className='covid-stats '>
-                  {loading ? (
-                    <Skeleton type='text' />
-                  ) : (
-                    formatNumbers(covidStats?.deaths?.new)
-                  )}
-                </td>
+                <CovidStatistic
+                  loading={loading}
+                  data={covidStats?.deaths?.new}
+                />
               </tr>
             </tbody>
           </table>
@@ -52,14 +47,12 @@ const ExpandedSlider = ({ covidStats, formatNumbers, loading }) => {
               </tr>
             </thead>
             <tbody>
-              <tr className='text-3xl font-bold'>
-                <td className='covid-stats text-green-600'>
-                  {loading ? (
-                    <Skeleton type='text' />
-                  ) : (
-                    formatNumbers(covidStats?.cases?.recovered)
-                  )}
-                </td>
+              <tr className='text-3xl font-bold text-green-600'>
+                <CovidStatistic
+                  loading={loading}
+                  data={covidStats?.cases?.recovered}
+                  color='green'
+                />
               </tr>
             </tbody>
           </table>
@@ -73,14 +66,12 @@ const ExpandedSlider = ({ covidStats, formatNumbers, loading }) => {
               </tr>
             </thead>
             <tbody>
-              <tr className='text-3xl font-bold'>
-                <td className='covid-stats text-red-600'>
-                  {loading ? (
-                    <Skeleton type='text' />
-                  ) : (
-                    formatNumbers(covidStats?.cases?.active)
-                  )}
-                </td>
+              <tr className='text-3xl font-bold text-red-600'>
+                <CovidStatistic
+                  loading={loading}
+                  data={covidStats?.cases?.active}
+                  color='red'
+                />
               </tr>
             </tbody>
           </table>
@@ -93,13 +84,10 @@ const ExpandedSlider = ({ covidStats, formatNumbers, loading }) => {
             </thead>
             <tbody>
               <tr className='text-3xl font-bold'>
-                <td className='covid-stats '>
-                  {loading ? (
-                    <Skeleton type='text' />
-                  ) : (
-                    formatNumbers(covidStats?.deaths?.total)
-                  )}
-                </td>
+                <CovidStatistic
+                  loading={loading}
+                  data={covidStats?.deaths?.total}
+                />
               </tr>
             </tbody>
           </table>
@@ -114,13 +102,11 @@ const ExpandedSlider = ({ covidStats, formatNumbers, loading }) => {
             </thead>
             <tbody>
               <tr className='text-3xl font-bold'>
-                <td className='covid-stats text-red-600'>
-                  {loading ? (
-                    <Skeleton type='text' />
-                  ) : (
-                    formatNumbers(covidStats?.cases?.total)
-                  )}
-                </td>
+                <CovidStatistic
+                  loading={loading}
+                  data={covidStats?.cases?.total}
+                  color='red'
+                />
               </tr>
             </tbody>
           </table>

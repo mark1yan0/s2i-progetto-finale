@@ -1,26 +1,22 @@
 import React from 'react';
-import formatNumbers from '../../../../utilities/formatNumbers';
 import ExpandedSlider from './ExpandedSlider';
 import CovidCountryInfo from '../CovidCountryInfo';
 import Search from '../../../Search';
+import CovidStatistic from '../CovidStatistic';
 import Skeleton from '../../../Skeleton';
 
 const Expanded = ({ covidStats, loading }) => {
   return (
-    <div className='relative px-1 md:px-10'>
+    <div className='relative px-5 md:px-10'>
       <div className='pb-6 flex flex-col sm:flex-row justify-between items-center'>
         <CovidCountryInfo
-          country={covidStats.country}
-          population={formatNumbers(covidStats?.population)}
+          country={covidStats?.country}
+          population={covidStats?.population}
         />
         <Search />
       </div>
 
-      <ExpandedSlider
-        covidStats={covidStats}
-        formatNumbers={formatNumbers}
-        loading={loading}
-      />
+      <ExpandedSlider covidStats={covidStats} loading={loading} />
 
       <table className='w-full hidden sm:table'>
         {/* positivi */}
@@ -32,28 +28,22 @@ const Expanded = ({ covidStats, loading }) => {
           </tr>
         </thead>
         <tbody>
-          <tr className='text-3xl text-red-600 font-bold'>
-            <td className='text-center pb-12'>
-              {loading ? (
-                <Skeleton type='text' />
-              ) : (
-                formatNumbers(covidStats?.cases?.new)
-              )}
-            </td>
-            <td className='covid-stats'>
-              {loading ? (
-                <Skeleton type='text' />
-              ) : (
-                formatNumbers(covidStats?.cases?.active)
-              )}
-            </td>
-            <td className='covid-stats'>
-              {loading ? (
-                <Skeleton type='text' />
-              ) : (
-                formatNumbers(covidStats?.cases?.total)
-              )}
-            </td>
+          <tr className='text-3xl font-bold'>
+            <CovidStatistic
+              loading={loading}
+              data={covidStats?.cases?.new}
+              color='red'
+            />
+            <CovidStatistic
+              loading={loading}
+              data={covidStats?.cases?.active}
+              color='red'
+            />
+            <CovidStatistic
+              loading={loading}
+              data={covidStats?.cases?.total}
+              color='red'
+            />
           </tr>
         </tbody>
 
@@ -66,20 +56,11 @@ const Expanded = ({ covidStats, loading }) => {
         </thead>
         <tbody>
           <tr className='text-3xl font-bold'>
-            <td className='covid-stats'>
-              {loading ? (
-                <Skeleton type='text' />
-              ) : (
-                formatNumbers(covidStats?.deaths?.new)
-              )}
-            </td>
-            <td className='covid-stats'>
-              {loading ? (
-                <Skeleton type='text' />
-              ) : (
-                formatNumbers(covidStats?.deaths?.total)
-              )}
-            </td>
+            <CovidStatistic loading={loading} data={covidStats?.deaths?.new} />
+            <CovidStatistic
+              loading={loading}
+              data={covidStats?.deaths?.total}
+            />
           </tr>
         </tbody>
 
@@ -91,21 +72,22 @@ const Expanded = ({ covidStats, loading }) => {
         </thead>
         <tbody>
           <tr className='font-bold text-3xl'>
-            <td className='text-center text-green-600'>
-              {loading ? (
-                <Skeleton type='text' />
-              ) : (
-                formatNumbers(covidStats?.cases?.recovered)
-              )}
-            </td>
+            <CovidStatistic
+              loading={loading}
+              data={covidStats?.cases?.recovered}
+              color='green'
+            />
           </tr>
         </tbody>
       </table>
-      {loading ? (
-        <Skeleton type='text' />
-      ) : (
-        <p className='covid-stats-date'>{covidStats?.day}</p>
-      )}
+
+      <div className='covid-stats-date'>
+        {loading ? (
+          <Skeleton type='text' align='right' />
+        ) : (
+          <p className='text-right'>{covidStats?.day}</p>
+        )}
+      </div>
     </div>
   );
 };

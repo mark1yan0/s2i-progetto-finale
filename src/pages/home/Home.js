@@ -10,7 +10,6 @@ import useLoading from '../../hooks/useLoading';
 
 const Home = () => {
   const [loading, hasErrors, snackbar] = useLoading(newsSelector);
-  console.log(hasErrors);
 
   return (
     <>

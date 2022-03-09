@@ -2,23 +2,30 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { VscSearchStop } from 'react-icons/vsc';
+import { useDispatch } from 'react-redux';
+import { fetchCovidStats } from '../services/covidSlice';
+import { useDebounce } from 'use-debounce/lib';
 
 const Search = () => {
   let width = window.innerWidth;
+  const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(true);
+
+  // searchbar state
+  const [search, setSearch] = useState('');
+  const [term] = useDebounce(search === '' ? 'italy' : search, 300);
+  useEffect(() => {
+    if (term) dispatch(fetchCovidStats(term)); //country in english
+  }, [dispatch, term]);
 
   useEffect(() => {
     setExpanded(width > 500 ? true : false);
   }, [width]);
-  // function updateSearch(e) {
-  //   setSearch(e.target.value);
-  // }
 
-  // function getSearch(e) {
-  //   e.preventDefault();
-  //   setQuery(search);
-  //   setSearch('');
-  // }
+  function updateSearch(e) {
+    setSearch(e.target.value);
+  }
+
   return (
     <form className='flex mt-2 sm:mt-0'>
       {expanded ? (
@@ -32,8 +39,7 @@ const Search = () => {
               className='rounded-full pl-8 pr-2 py-1 focus:outline text-primary-dark focus:border-primary-dark'
               placeholder='Cerca Paese'
               type='text'
-              // value={search}
-              // onChange={updateSearch}
+              onChange={updateSearch}
             />
           </div>
           <VscSearchStop
