@@ -20,7 +20,10 @@ const TopNav = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: '',
+  });
   // user
   useEffect(() => {
     dispatch(getCurrentUser());
@@ -29,8 +32,18 @@ const TopNav = () => {
         if (currentUser) {
           dispatch(getCurrentUserSuccess(currentUser));
           history.replace(location.pathname);
-          setLoggedIn(true);
-          setTimeout(() => setLoggedIn(false), 2000);
+          setSnackbar({
+            open: true,
+            message: 'Accesso avvenuto con successo!',
+          });
+          setTimeout(
+            () =>
+              setSnackbar({
+                open: false,
+                message: '',
+              }),
+            2000
+          );
         } else {
           dispatch(userSignedOut());
         }
@@ -75,7 +88,7 @@ const TopNav = () => {
           <UserDropDown userEmail={user?.email} />
         </div>
       )}
-      {loggedIn && <SnackBar type='success' message='Logged in successfully' />}
+      {snackbar.open && <SnackBar type='success' message={snackbar.message} />}
     </nav>
   );
 };

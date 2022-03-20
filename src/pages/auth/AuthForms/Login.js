@@ -6,14 +6,8 @@ import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 //components
 import Button from '../../../components/Button';
 
-const Login = ({
-  passwordVisible,
-  event,
-  setLoginEmail,
-  setLoginPassword,
-  loginHandler,
-}) => {
-  const { loading } = useSelector(userSelector);
+const Login = ({ onChange, passwordVisible, event, loginHandler }) => {
+  const { loading, hasErrors } = useSelector(userSelector);
 
   return (
     <form className='flex flex-col justify-between' onSubmit={loginHandler}>
@@ -23,20 +17,34 @@ const Login = ({
       <input
         type='email'
         placeholder='Email'
-        className='input'
-        onChange={e => setLoginEmail(e.target.value)}
+        className={`input ${hasErrors && 'placeholder-red-600 text-red-600'}`}
+        style={{
+          border: hasErrors ? '1px solid red' : undefined,
+        }}
+        onChange={e => onChange(e, 'login/email')}
       />
       <div className='relative'>
         <input
           type='password'
           placeholder='Password'
-          className='input pws'
-          onChange={e => setLoginPassword(e.target.value)}
+          className={`input pws ${
+            hasErrors && 'placeholder-red-600 text-red-600'
+          }`}
+          style={{
+            border: hasErrors ? '1px solid red' : undefined,
+          }}
+          onChange={e => onChange(e, 'login/password')}
         />
         {passwordVisible ? (
-          <AiFillEyeInvisible className='show-password-icon' onClick={event} />
+          <AiFillEyeInvisible
+            className={`show-password-icon ${hasErrors && 'text-red-600'}`}
+            onClick={event}
+          />
         ) : (
-          <AiFillEye className='show-password-icon' onClick={event} />
+          <AiFillEye
+            className={`show-password-icon ${hasErrors && 'text-red-600'}`}
+            onClick={event}
+          />
         )}
       </div>
 

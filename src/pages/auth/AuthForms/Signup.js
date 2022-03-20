@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 //icons
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 //components
@@ -7,29 +7,15 @@ import { useSelector } from 'react-redux';
 import { userSelector } from '../../../services/authSlice';
 
 const Signup = ({
+  onChange,
   passwordVisible,
   event,
-  setRegisterEmail,
-  setRegisterPassword,
   registerHandler,
+  reference,
+  confirmPassword,
 }) => {
-  const { loading } = useSelector(userSelector);
-  //form validation
-  const [notEqual, setNotEqual] = useState(null);
+  const { loading, hasErrors } = useSelector(userSelector);
 
-  /* Form validation
-   ==============================*/
-
-  function confirmPassword(e) {
-    let pwsToConfirm = document.querySelector('.pws-toconfirm');
-    let targetPws = e.target.value;
-    // Le password devono combaciare
-    if (pwsToConfirm.value !== targetPws) {
-      setNotEqual(true);
-    } else {
-      setNotEqual(false);
-    }
-  }
   return (
     <form className='flex flex-col justify-between' onSubmit={registerHandler}>
       <h1 className='text-center text-4xl font-bold text-primary-dark'>
@@ -43,39 +29,64 @@ const Signup = ({
       <input
         type='email'
         placeholder='Email'
-        className='input'
-        onChange={e => setRegisterEmail(e.target.value)}
+        className={`input ${hasErrors && 'placeholder-red-600 text-red-600'}`}
+        style={{
+          border: hasErrors ? '1px solid red' : undefined,
+        }}
+        onChange={e => onChange(e, 'register/email')}
       />
       <div className='relative'>
         <input
           type='password'
           placeholder='Password'
-          className='input pws pws-toconfirm'
+          ref={reference}
+          className={`pws input ${
+            hasErrors && 'placeholder-red-600 text-red-600'
+          }`}
+          style={{
+            border: hasErrors ? '1px solid red' : undefined,
+          }}
+          onChange={e => onChange(e, 'register/password')}
           onBlur={e => {
             confirmPassword(e);
           }}
         />
         {passwordVisible ? (
-          <AiFillEyeInvisible className='show-password-icon' onClick={event} />
+          <AiFillEyeInvisible
+            className={`show-password-icon ${hasErrors && 'text-red-600'}`}
+            onClick={event}
+          />
         ) : (
-          <AiFillEye className='show-password-icon' onClick={event} />
+          <AiFillEye
+            className={`show-password-icon ${hasErrors && 'text-red-600'}`}
+            onClick={event}
+          />
         )}
       </div>
       <div className='relative'>
         <input
           type='password'
           placeholder='Conferma Password'
-          className='input pws'
-          onChange={e => setRegisterPassword(e.target.value)}
+          className={`pws input ${
+            hasErrors && 'placeholder-red-600 text-red-600'
+          }`}
+          style={{
+            border: hasErrors ? '1px solid red' : undefined,
+          }}
           onBlur={e => confirmPassword(e)}
         />
         {passwordVisible ? (
-          <AiFillEyeInvisible className='show-password-icon' onClick={event} />
+          <AiFillEyeInvisible
+            className={`show-password-icon ${hasErrors && 'text-red-600'}`}
+            onClick={event}
+          />
         ) : (
-          <AiFillEye className='show-password-icon' onClick={event} />
+          <AiFillEye
+            className={`show-password-icon ${hasErrors && 'text-red-600'}`}
+            onClick={event}
+          />
         )}
       </div>
-      <div>{notEqual ? <p>Le password devono combaciare</p> : ''}</div>
       <div className='flex justify-end items-center'>
         <Button text='Iscriviti' type='submit' primary loading={loading} />
       </div>

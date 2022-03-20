@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 //components
 import Login from './AuthForms/Login';
 import Signup from './AuthForms/Signup';
@@ -13,51 +13,94 @@ import {
 import {
   getCurrentUser,
   getCurrentUserFailure,
+  clearErrors,
 } from '../../services/authSlice';
-import SnackBar from '../../components/SnackBar';
+import makeAuthErrorMessage from '../../utilities/makeAuthErrorMessage';
+import { authReducer } from '../../utilities/reducers';
+import FormFooter from './AuthForms/FormFooter';
+
+const initialValues = {
+  loginForm: true,
+  registerEmail: '',
+  registerPassword: '',
+  loginEmail: '',
+  loginPassword: '',
+  errorMessage: '',
+};
 
 const AuthPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [loginForm, setLoginForm] = useState(true);
-  const [registerEmail, setRegisterEmail] = useState('');
-  const [registerPassword, setRegisterPassword] = useState('');
+  const { hasErrors } = useSelector(state => state.user);
+  const confirmRef = useRef(null);
 
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-
-  // for snackbar
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [authForm, reducerDispatch] = useReducer(authReducer, initialValues);
 
   async function loginHandler(e) {
     e.preventDefault();
-    dispatch(getCurrentUser());
+    if (!hasErrors) {
+      dispatch(getCurrentUser());
+    }
+    const email = authForm.loginEmail;
+    const password = authForm.loginPassword;
     try {
-      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-      setLoggedIn(true);
-      setTimeout(() => setLoggedIn(false), 2000);
-      history.replace('/');
+      if (email === '' || password === '') {
+        reducerDispatch({
+          type: 'auth/errorMessage',
+          payload: 'Tutti i campi del form devono essere riempiti',
+        });
+        dispatch(getCurrentUserFailure());
+        return;
+      }
+
+      if (!hasErrors) {
+        await signInWithEmailAndPassword(auth, email, password);
+        history.replace('/');
+      }
     } catch (error) {
-      console.log(error.message);
+      reducerDispatch({
+        type: 'auth/errorMessage',
+        payload: makeAuthErrorMessage(error.message),
+      });
       dispatch(getCurrentUserFailure());
     }
   }
 
   async function registerHandler(e) {
     e.preventDefault();
-    dispatch(getCurrentUser());
+    if (!hasErrors) {
+      dispatch(getCurrentUser());
+    }
+    const email = authForm.registerEmail;
+    const password = authForm.registerPassword;
     try {
-      await createUserWithEmailAndPassword(
-        auth,
-        registerEmail,
-        registerPassword
-      );
-      setLoggedIn(true);
-      setTimeout(() => setLoggedIn(false), 2000);
-      history.replace('/');
+      if (email === '' || password === '') {
+        reducerDispatch({
+          type: 'auth/errorMessage',
+          payload: 'Tutti i campi del form devono essere riempiti',
+        });
+        dispatch(getCurrentUserFailure());
+        return;
+      }
+
+      if (!hasErrors) {
+        await createUserWithEmailAndPassword(auth, email, password);
+        history.replace('/');
+      }
     } catch (error) {
-      console.log(error.message);
+      reducerDispatch({
+        type: 'auth/errorMessage',
+        payload: makeAuthErrorMessage(error.message),
+      });
       dispatch(getCurrentUserFailure());
+    }
+  }
+
+  // hadles input onChange
+  function handleChange(e, actionType) {
+    reducerDispatch({ type: actionType, payload: e.target.value });
+    if (e.target.value !== '') {
+      dispatch(clearErrors());
     }
   }
 
@@ -66,62 +109,71 @@ const AuthPage = () => {
 
   //passwod visibility
   function setPasswordVisibility() {
-    let passwordInput = document.querySelectorAll('.pws');
-    for (let i = 0; i < passwordInput.length; i++) {
+    let passwordInputs = document.querySelectorAll('.pws');
+    passwordInputs.forEach(input => {
       if (!passwordVisible) {
         setPasswordVisible(true);
-        passwordInput[i].type = 'text';
+        input.type = 'text';
       } else {
         setPasswordVisible(false);
-        passwordInput[i].type = 'password';
+        input.type = 'password';
       }
+    });
+  }
+
+  // confirm password validation
+  function confirmPassword(e) {
+    let targetPws = e.target.value;
+    // Le password devono combaciare
+    if (confirmRef.current.value !== targetPws) {
+      reducerDispatch({
+        type: 'auth/errorMessage',
+        payload: 'Le password devono combaciare',
+      });
+      dispatch(getCurrentUserFailure());
+    } else {
+      dispatch(clearErrors());
     }
   }
 
   return (
     <div className=''>
       <section className='w-70 sm:w-96 min-h-screen flex flex-col justify-center -mt-10'>
-        {loginForm ? (
+        {authForm?.loginForm ? (
           <>
             <Login
-              setLoginEmail={setLoginEmail}
-              setLoginPassword={setLoginPassword}
               loginHandler={loginHandler}
+              onChange={handleChange}
               passwordVisible={passwordVisible}
               event={setPasswordVisibility}
             />
-            <p style={{ color: 'grey' }}>
-              Non hai un account?
-              <span
-                onClick={() => setLoginForm(false)}
-                className='cursor-pointer text-primary-dark'
-              >
-                Iscriviti
-              </span>
-            </p>
+            <FormFooter
+              text='Non hai un account?'
+              actionText='Iscriviti'
+              dispatch={reducerDispatch}
+              dispatchPayload={false}
+            />
           </>
         ) : (
           <>
             <Signup
-              setRegisterEmail={setRegisterEmail}
-              setRegisterPassword={setRegisterPassword}
+              onChange={handleChange}
               registerHandler={registerHandler}
               passwordVisible={passwordVisible}
+              confirmPassword={confirmPassword}
               event={setPasswordVisibility}
+              reference={confirmRef}
             />
-            <p style={{ color: 'grey' }}>
-              Hai già un account?{' '}
-              <span
-                onClick={() => setLoginForm(true)}
-                className='cursor-pointer text-primary-dark'
-              >
-                Accedi
-              </span>{' '}
-            </p>
+            <FormFooter
+              text='Hai già un account?'
+              actionText='Accedi'
+              dispatch={reducerDispatch}
+              dispatchPayload={true}
+            />
           </>
         )}
+        {authForm?.errorMessage}
       </section>
-      {loggedIn && <SnackBar type='success' message='Logged in successfully' />}
     </div>
   );
 };
