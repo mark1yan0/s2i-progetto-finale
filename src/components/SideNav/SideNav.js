@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import Weather from './Weather';
+import Weather from '../Weather';
 import { useSelector } from 'react-redux';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdOutlineClose } from 'react-icons/md';
@@ -27,7 +27,7 @@ export const SideNav = () => {
       }`}
       style={{ zIndex: 100 }}
     >
-      {openSidebar && <Backdrop setOpenSidebar={setOpenSidebar} />}
+      {openSidebar && <Backdrop toggleBackdrop={setOpenSidebar} />}
 
       <h1
         className={`md:hidden py-3 cursor-pointer text-text-light hover:bg-primary-light text-xl ${
@@ -38,7 +38,7 @@ export const SideNav = () => {
         {openSidebar ? <MdOutlineClose /> : <GiHamburgerMenu />}
       </h1>
       <div
-        className={`h-full md:flex flex-col justify-between ${
+        className={`h-full md:flex flex-col justify-between pb-20 md:pb-10 ${
           openSidebar ? 'flex' : 'hidden'
         }`}
       >

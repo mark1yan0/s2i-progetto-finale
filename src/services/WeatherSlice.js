@@ -1,10 +1,15 @@
-import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   loading: false,
   hasErrors: false,
   weather: [],
+  defaultWeather: {
+    isGeolocation: false,
+    location: localStorage.getItem('defaultWeather')
+      ? JSON.parse(localStorage.getItem('defaultWeather'))
+      : 'Milan',
+  },
 };
 
 const weatherSlice = createSlice({
@@ -19,6 +24,16 @@ const weatherSlice = createSlice({
       state.loading = false;
       state.hasErrors = false;
     },
+
+    setDefaultWeather: (state, { payload }) => {
+      if (payload) {
+        state.defaultWeather = payload;
+        localStorage.setItem(
+          'defaultWeather',
+          JSON.stringify(payload.location)
+        );
+      }
+    },
     getWeatherFailure: (state, error) => {
       state.loading = false;
       state.hasErrors = true;
@@ -27,29 +42,11 @@ const weatherSlice = createSlice({
   },
 });
 
-export const { getWeather, getWeatherFailure, getWeatherSuccess } =
-  weatherSlice.actions;
+export const {
+  getWeather,
+  getWeatherFailure,
+  getWeatherSuccess,
+  setDefaultWeather,
+} = weatherSlice.actions;
 export default weatherSlice.reducer;
 export const weatherSelector = state => state.weather;
-
-export function fetchWeather(query) {
-  const options = {
-    method: 'GET',
-    url: 'https://weatherapi-com.p.rapidapi.com/current.json',
-    params: { q: query },
-    headers: {
-      'x-rapidapi-host': process.env.REACT_APP_WEATHER_HOST,
-      'x-rapidapi-key': process.env.REACT_APP_WEATHER_KEY,
-    },
-  };
-
-  return async dispatch => {
-    dispatch(getWeather());
-    try {
-      const res = await axios.request(options);
-      dispatch(getWeatherSuccess(res?.data));
-    } catch (error) {
-      dispatch(getWeatherFailure(error));
-    }
-  };
-}

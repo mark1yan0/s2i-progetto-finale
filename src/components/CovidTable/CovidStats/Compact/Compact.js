@@ -13,7 +13,7 @@ const Compact = ({ covidStats, loading }) => {
           country={covidStats?.country}
           population={covidStats?.population}
         />
-        <Search />
+        <Search type='covid' />
       </div>
 
       {/* responsive slider */}

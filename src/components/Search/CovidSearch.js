@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { BsSearch } from 'react-icons/bs';
+import React, { useState, useEffect } from 'react';
 import { VscSearchStop } from 'react-icons/vsc';
+import { BsSearch } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
-import { fetchCovidStats } from '../services/covidSlice';
+import { fetchCovidStats } from '../../services/covidSlice';
 import { useDebounce } from 'use-debounce/lib';
 
-const Search = () => {
+const CovidSearch = () => {
   let width = window.innerWidth;
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(true);
@@ -57,4 +56,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default CovidSearch;

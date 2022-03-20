@@ -9,6 +9,8 @@ import {
   getCurrentUserFailure,
   userSignedOut,
 } from '../services/authSlice';
+import { setDefaultWeather } from '../services/weatherSlice';
+import getCurrentLocation from '../utilities/getCurrentLocation';
 import { useSelector, useDispatch } from 'react-redux';
 import SnackBar from './SnackBar';
 import UserDropDown from './UserDropDown';
@@ -19,11 +21,11 @@ const TopNav = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
   const [loggedIn, setLoggedIn] = useState(false);
-
+  // user
   useEffect(() => {
     dispatch(getCurrentUser());
     try {
-      const unsubscribe = onAuthStateChanged(auth, currentUser => {
+      onAuthStateChanged(auth, currentUser => {
         if (currentUser) {
           dispatch(getCurrentUserSuccess(currentUser));
           history.replace(location.pathname);
@@ -33,12 +35,30 @@ const TopNav = () => {
           dispatch(userSignedOut());
         }
       });
-      return unsubscribe;
     } catch (error) {
       dispatch(getCurrentUserFailure());
     }
     // eslint-disable-next-line
   }, []);
+
+  // user location for weather forecasts
+  const [userLocation, setUserLocation] = useState(undefined);
+  useEffect(() => {
+    getCurrentLocation(setUserLocation);
+  }, []);
+
+  // sets user location for forecast
+  useEffect(() => {
+    if (userLocation) {
+      dispatch(
+        setDefaultWeather({
+          isGeolocation: true,
+          location: userLocation,
+        })
+      );
+    }
+    // eslint-disable-next-line
+  }, [userLocation]);
 
   return (
     <nav

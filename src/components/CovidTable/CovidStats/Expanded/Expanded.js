@@ -13,7 +13,7 @@ const Expanded = ({ covidStats, loading }) => {
           country={covidStats?.country}
           population={covidStats?.population}
         />
-        <Search />
+        <Search type='covid' />
       </div>
 
       <ExpandedSlider covidStats={covidStats} loading={loading} />

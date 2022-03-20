@@ -25,10 +25,7 @@ const Skeleton = ({ type, height, align }) => {
   return (
     <animated.div
       className={`${text} ${box} bg-gray-300 my-1 rounded-sm flex justify-center items-center`}
-      style={
-        ({ ...animation, height: type === 'box' ? height : undefined },
-        position)
-      }
+      style={{ ...animation, ...position, height: height && height }}
     >
       {type === 'box' && <Loading size='xl' />}
     </animated.div>
