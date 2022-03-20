@@ -12,6 +12,9 @@ module.exports = {
       DEFAULT: '1px solid #3A435E',
     },
     extend: {
+      screens: {
+        xs: '350px',
+      },
       borderRadius: {
         full: '25px',
       },

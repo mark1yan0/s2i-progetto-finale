@@ -137,43 +137,41 @@ const AuthPage = () => {
   }
 
   return (
-    <div className=''>
-      <section className='w-70 sm:w-96 min-h-screen flex flex-col justify-center -mt-10'>
-        {authForm?.loginForm ? (
-          <>
-            <Login
-              loginHandler={loginHandler}
-              onChange={handleChange}
-              passwordVisible={passwordVisible}
-              event={setPasswordVisibility}
-            />
-            <FormFooter
-              text='Non hai un account?'
-              actionText='Iscriviti'
-              dispatch={reducerDispatch}
-              dispatchPayload={false}
-            />
-          </>
-        ) : (
-          <>
-            <Signup
-              onChange={handleChange}
-              registerHandler={registerHandler}
-              passwordVisible={passwordVisible}
-              confirmPassword={confirmPassword}
-              event={setPasswordVisibility}
-              reference={confirmRef}
-            />
-            <FormFooter
-              text='Hai già un account?'
-              actionText='Accedi'
-              dispatch={reducerDispatch}
-              dispatchPayload={true}
-            />
-          </>
-        )}
-        {authForm?.errorMessage}
-      </section>
+    <div className='w-80 px-12 xs:px-6 sm:px-0 sm:w-96 min-h-screen flex flex-col justify-center -mt-10'>
+      {authForm?.loginForm ? (
+        <>
+          <Login
+            loginHandler={loginHandler}
+            onChange={handleChange}
+            passwordVisible={passwordVisible}
+            event={setPasswordVisibility}
+          />
+          <FormFooter
+            text='Non hai un account?'
+            actionText='Iscriviti'
+            dispatch={reducerDispatch}
+            dispatchPayload={false}
+          />
+        </>
+      ) : (
+        <>
+          <Signup
+            onChange={handleChange}
+            registerHandler={registerHandler}
+            passwordVisible={passwordVisible}
+            confirmPassword={confirmPassword}
+            event={setPasswordVisibility}
+            reference={confirmRef}
+          />
+          <FormFooter
+            text='Hai già un account?'
+            actionText='Accedi'
+            dispatch={reducerDispatch}
+            dispatchPayload={true}
+          />
+        </>
+      )}
+      <p className='text-red-600 w-70'>{authForm?.errorMessage}</p>
     </div>
   );
 };
