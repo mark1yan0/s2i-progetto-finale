@@ -14,7 +14,7 @@ import { newsSelector } from '../services/newsSlice';
 const UserDropDown = ({ userEmail, toggleSidebar }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const { readLater } = useSelector(newsSelector);
+  const { readLater, loading } = useSelector(newsSelector);
 
   async function logoutHandler() {
     try {
@@ -48,7 +48,7 @@ const UserDropDown = ({ userEmail, toggleSidebar }) => {
         >
           <VscLibrary className='mr-2' />
           La mia Libreria
-          {readLater.length > 0 && (
+          {!loading && readLater.length > 0 && (
             <span className='ml-2 px-2 rounded-full text-text-light bg-primary-dark'>
               {readLater.length}
             </span>
