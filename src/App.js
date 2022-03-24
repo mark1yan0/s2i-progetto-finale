@@ -1,5 +1,5 @@
-import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { userSelector } from './services/authSlice';
 //components
@@ -15,13 +15,24 @@ import Saved from './pages/saved/Saved';
 
 const App = () => {
   const baseSectionStyle = 'flex flex-col items-center min-h-screen';
+  const location = useLocation();
+
+  // authpage background based on pathname
+  const [path, setPath] = useState('');
+  useEffect(() => {
+    setPath(location.pathname);
+  }, [location.pathname]);
 
   return (
     <div className='relative'>
       <TopNav />
       <div>
         <SideNav />
-        <main className='pt-20 pb-6 ml-10 md:ml-72'>
+        <main
+          className={`pt-20 pb-6 ml-10 md:ml-72 ${
+            path === '/auth' && 'bg-primary-dark'
+          } `}
+        >
           <Switch>
             <Route path='/auth'>
               <section id='auth' className={baseSectionStyle}>

@@ -11,7 +11,7 @@ const Login = ({ onChange, passwordVisible, event, loginHandler }) => {
 
   return (
     <form className='flex flex-col justify-between' onSubmit={loginHandler}>
-      <h1 className='text-center text-4xl font-bold text-primary-dark'>
+      <h1 className='text-center text-4xl font-bold text-secondary-light'>
         Accedi
       </h1>
       <input
@@ -49,7 +49,7 @@ const Login = ({ onChange, passwordVisible, event, loginHandler }) => {
       </div>
 
       <div className='flex justify-end items-center'>
-        <Button text='Accedi' type='submit' primary loading={loading} />
+        <Button text='Accedi' type='submit' secondary loading={loading} />
       </div>
     </form>
   );

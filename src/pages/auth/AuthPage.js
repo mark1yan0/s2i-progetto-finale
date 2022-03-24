@@ -171,7 +171,7 @@ const AuthPage = () => {
           />
         </>
       )}
-      <p className='text-red-600 w-70'>{authForm?.errorMessage}</p>
+      <p className='text-red-500 w-70'>{authForm?.errorMessage}</p>
     </div>
   );
 };

@@ -24,11 +24,15 @@
       ====================== */
   /* input */
   .input {
-    @apply rounded-full text-primary-dark bg-secondary-dark my-3 p-2 w-full focus:outline focus:border-primary-dark;
+    @apply rounded-full text-primary-dark bg-secondary-dark my-3 p-2 w-full focus:border-primary-dark;
   }
 
   /* show password icons */
   .show-password-icon {
     @apply absolute bottom-6 right-5 text-primary-dark text-lg cursor-pointer;
   }
+}
+
+.input {
+  outline: none;
 }

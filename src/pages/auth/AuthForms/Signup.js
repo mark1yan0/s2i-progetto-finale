@@ -17,10 +17,11 @@ const Signup = ({
   const { loading, hasErrors } = useSelector(userSelector);
 
   return (
-    <form className='flex flex-col justify-between' onSubmit={registerHandler}>
-      <h1 className='text-center text-4xl font-bold text-primary-dark'>
-        Iscriviti
-      </h1>
+    <form
+      className='flex flex-col justify-between text-secondary-light'
+      onSubmit={registerHandler}
+    >
+      <h1 className='text-center text-4xl font-bold'>Iscriviti</h1>
       <p className='text-center text-xs'>
         Iscriviti per avere la possibilità <br className='sm:hidden' /> di
         salvare i post da leggere più tardi
@@ -88,7 +89,7 @@ const Signup = ({
         )}
       </div>
       <div className='flex justify-end items-center'>
-        <Button text='Iscriviti' type='submit' primary loading={loading} />
+        <Button text='Iscriviti' type='submit' secondary loading={loading} />
       </div>
     </form>
   );
