@@ -7,12 +7,14 @@ import {
   setDefaultWeather,
   getWeatherSuccess,
 } from '../../services/weatherSlice';
+
 import { useDebounce } from 'use-debounce/lib';
 import Search from '../Search';
 import useWeather from '../../hooks/useWeather';
 import WeatherView from './WeatherView';
 
 const Weather = () => {
+  const { user } = useSelector(state => state.user);
   //weather data
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
@@ -65,14 +67,16 @@ const Weather = () => {
   return (
     <section className='flex pr-6'>
       <WeatherView weather={weather} loading={loading} hasErrors={hasErrors} />
-      <Search
-        type='weather'
-        updateSearch={updateSearch}
-        handleSave={handleSave}
-        handleClose={handleClose}
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-      />
+      {user !== null && (
+        <Search
+          type='weather'
+          updateSearch={updateSearch}
+          handleSave={handleSave}
+          handleClose={handleClose}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        />
+      )}
     </section>
   );
 };

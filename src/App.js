@@ -18,19 +18,19 @@ const App = () => {
   const location = useLocation();
 
   // authpage background based on pathname
-  const [path, setPath] = useState('');
+  const [path, setPath] = useState('/auth');
   useEffect(() => {
     setPath(location.pathname);
   }, [location.pathname]);
 
   return (
-    <div className='relative'>
+    <div className='relative '>
       <TopNav />
       <div>
         <SideNav />
         <main
-          className={`pt-20 pb-6 ml-10 md:ml-72 ${
-            path === '/auth' && 'bg-primary-dark'
+          className={`pt-20 pb-6 ml-10 md:ml-72 bg-primary-dark ${
+            path !== '/auth' && 'bg-secondary-light'
           } `}
         >
           <Switch>
