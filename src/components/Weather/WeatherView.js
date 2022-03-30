@@ -19,7 +19,10 @@ const WeatherView = ({ modal, hasErrors, loading, weather }) => {
       } md:block px-6 pb-1`}
     >
       {hasErrors ? (
-        <SnackBar type='error' message='Could not load weather info' />
+        <SnackBar
+          type='error'
+          message="C'è stato un problema nel caricamento"
+        />
       ) : (
         <>
           {loading ? (

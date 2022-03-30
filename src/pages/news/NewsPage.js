@@ -12,7 +12,12 @@ const NewsPage = () => {
     <div className='page-wrapper'>
       <Search type='news' />
       {loading && <Skeleton type='box' height='100vh' />}
-      {snackbar && <SnackBar type='error' message='Could not load news' />}
+      {snackbar && (
+        <SnackBar
+          type='error'
+          message="C'è stato un problema nel caricare le notizie"
+        />
+      )}
       {!loading && <Grid country='it' size='9' filters />}
     </div>
   );

@@ -13,7 +13,12 @@ const CovidPage = () => {
     <div className='page-wrapper'>
       <CovidTable expanded />
       {loading && <Skeleton type='box' height='100vh' />}
-      {snackbar && <SnackBar type='error' message='Could not load news' />}
+      {snackbar && (
+        <SnackBar
+          type='error'
+          message="C'è stato un problema nel caricare le notizie"
+        />
+      )}
       {!loading && !hasErrors && <Grid country='it' size='6' covidpage />}
     </div>
   );

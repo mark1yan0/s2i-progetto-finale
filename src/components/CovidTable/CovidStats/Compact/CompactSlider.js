@@ -5,7 +5,7 @@ import CovidStatistic from '../CovidStatistic';
 const CompactSlider = ({ covidStats, loading }) => {
   return (
     <div style={{ height: 100, width: '100%' }} className='mb-5 sm:hidden'>
-      <Slider>
+      <Slider auto='5000'>
         <table className='flex flex-col items-center w-full'>
           <thead>
             <tr className='font-normal'>
