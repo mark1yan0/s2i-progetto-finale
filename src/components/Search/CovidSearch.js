@@ -36,7 +36,7 @@ const CovidSearch = () => {
             />
             <input
               className='rounded-full pl-8 pr-2 py-1 focus:outline text-primary-dark focus:border-primary-dark'
-              placeholder='Cerca Paese'
+              placeholder='Cerca Paese (in inglese)'
               type='text'
               onChange={updateSearch}
             />

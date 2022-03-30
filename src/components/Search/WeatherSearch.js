@@ -36,7 +36,7 @@ const WeatherSearch = ({
               />
               <input
                 className='rounded-full pl-8 pr-2 py-1 w-full focus:outline text-primary-dark focus:border-primary-dark'
-                placeholder='Cerca Località'
+                placeholder='Cerca Località (in inglese)'
                 type='text'
                 onChange={updateSearch}
               />

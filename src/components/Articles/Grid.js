@@ -13,9 +13,7 @@ const Grid = ({ country, size, category, filters, covidpage }) => {
   const { allNews, newsCategories } = useNews(country, 8);
 
   const covidCategory = newsCategories.covid;
-  const [articles, setArticles] = useState(
-    covidpage ? covidCategory : searchNews.length > 0 ? searchNews : allNews
-  );
+  const [articles, setArticles] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState('');
 
   useEffect(() => {
@@ -102,7 +100,7 @@ const Grid = ({ country, size, category, filters, covidpage }) => {
         />
       )}
       {!hasErrors && newsContent}
-      {hasErrors && <h1>Could not load news</h1>}
+      {hasErrors && <h1>C'è stato un errore nel caricamento delle notizie</h1>}
     </>
   );
 };
