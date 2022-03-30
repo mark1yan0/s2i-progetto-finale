@@ -32,15 +32,15 @@
 <h2 id="built">Costruito con</h2>
 <p>L'app è stata costruita con React e le seguenti principali tecnologie:</p>
 <ul>
-    <li><a href="#router">React Router per il routing</li>
-    <li><a href="#icons">React Icons</a> per le icone</li>
-    <li><a href="#axios">Axios</a> per le chiamate alle API</li>
+    <li><a href="#router">React Router</a></li>
+    <li><a href="#icons">React Icons</a></li>
+    <li><a href="#axios">Axios</a></li>
     <li><a href="#redux">Redux</a>, in particolare Redux Toolkit per lo state menagment</li>
     <li><a href="#firebase">Firebase</a> per autenticazione l'hosting dell'app</li>
-    <li><a href="#tailwind">TailwindCSS</a></li>
+    <li><a href="#tailwind">TailwindCSS</a> per lo stile</li>
     <li><a href="#custom-hooks">Custom Hooks</a></li>
     <li><a href="#features">React Features</a></li>
-    <li><a href="#spring">React-Spring</a></li>
+    <li><a href="#spring">React-Spring</a> per le animazioni</li>
 </ul>
 
 <p>React Router, Icons, Axios sono librerie con cui ho già avuto esperienza e di cui ho parlato in altri progetti</p>
