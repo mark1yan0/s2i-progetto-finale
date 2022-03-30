@@ -1,4 +1,4 @@
-<h1>Start2Impact progetto final Front-End</h1>
+<h1>Start2Impact progetto finale Front-End</h1>
 
 <h2>Contenuti</h2>
 <ol>
