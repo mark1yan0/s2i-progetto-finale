@@ -11,7 +11,7 @@ const SnackBar = ({ message, type }) => {
 
   return reactDom.createPortal(
     <div
-      className={`flex justify-around items-center px-10 py-2 ${snackBarType} absolute rounded text-text-light`}
+      className={`flex justify-around items-center px-10 py-2 ${snackBarType} fixed rounded text-text-light`}
       style={{ zIndex: 9999 }}
     >
       {type === 'error' ? <BiErrorCircle /> : <IoIosCheckmarkCircleOutline />}

@@ -80,7 +80,7 @@ const TopNav = () => {
     >
       <h1>
         <NavLink className='text-5xl' exact to='/'>
-          LOGO
+          UpToDate
         </NavLink>
       </h1>
       {user && (
