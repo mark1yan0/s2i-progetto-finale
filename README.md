@@ -1,8 +1,3 @@
-api:{
-covid: 'https://rapidapi.com/api-sports/api/covid-193/',
-news: 'https://newsapi.org/',
-weatherAPI.com: 'https://rapidapi.com/weatherapi/api/weatherapi-com/'}
-
 <h1>Start2Impact progetto final Front-End</h1>
 
 <h2>Contenuti</h2>
