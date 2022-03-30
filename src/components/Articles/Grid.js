@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState, lazy, Suspense, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import useNews from '../../hooks/useNews';
 import { useSelector } from 'react-redux';
@@ -9,12 +9,27 @@ const Card = lazy(() => import('./Card'));
 
 const Grid = ({ country, size, category, filters, covidpage }) => {
   const history = useHistory();
-  const { hasErrors } = useSelector(state => state.news);
+  const { hasErrors, searchNews } = useSelector(state => state.news);
   const { allNews, newsCategories } = useNews(country, 8);
 
   const covidCategory = newsCategories.covid;
-  const [articles, setArticles] = useState(covidpage ? covidCategory : allNews);
+  const [articles, setArticles] = useState(
+    covidpage ? covidCategory : searchNews.length > 0 ? searchNews : allNews
+  );
   const [selectedFilter, setSelectedFilter] = useState('');
+
+  useEffect(() => {
+    if (covidpage) {
+      setArticles(covidCategory);
+    } else {
+      if (searchNews.length > 0) {
+        setArticles(searchNews);
+      } else {
+        setArticles(allNews);
+      }
+    }
+    // eslint-disable-next-line
+  }, [allNews, searchNews]);
 
   //condiitonal logic
   const newsContent = category ? (
@@ -32,7 +47,7 @@ const Grid = ({ country, size, category, filters, covidpage }) => {
         <div className='sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
           {newsCategories[category].slice(0, size).map(article => (
             <Suspense
-              key={article?.id}
+              key={article?.id + Math.random()}
               fallback={<Skeleton type='box' height={300} />}
             >
               <Card
@@ -56,7 +71,7 @@ const Grid = ({ country, size, category, filters, covidpage }) => {
     <section className='sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
       {articles.map(article => (
         <Suspense
-          key={article?.id}
+          key={article?.id + Math.random()}
           fallback={<Skeleton type='box' height={300} />}
         >
           <Card

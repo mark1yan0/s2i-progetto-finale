@@ -20,6 +20,7 @@ const initialState = {
     : [],
   categories: false,
   sliderNews: [],
+  searchNews: [],
 };
 
 //A slice for news
@@ -76,6 +77,12 @@ const newsSlice = createSlice({
 
       state.categories = true;
       state.loading = false;
+    },
+
+    getSearchNewsSuccess: (state, action) => {
+      state.loading = false;
+      state.hasErrors = false;
+      state.searchNews = action.payload;
     },
 
     toggleReadLater: (state, action) => {
@@ -143,6 +150,7 @@ export const {
   setCategories,
   toggleReadLater,
   setSliderNews,
+  getSearchNewsSuccess,
 } = newsSlice.actions;
 
 //the reducers
@@ -175,7 +183,6 @@ export function fetchNews(country, size) {
           description: article.description,
           date: article.publishedAt,
           author: article.author,
-          source: article.source?.name,
           image: article.urlToImage,
           link: article.url,
           category: 'business',
@@ -192,7 +199,6 @@ export function fetchNews(country, size) {
           description: article.description,
           date: article.publishedAt,
           author: article.author,
-          source: article.source?.name,
           image: article.urlToImage,
           link: article.url,
           category: 'science',
@@ -209,7 +215,6 @@ export function fetchNews(country, size) {
           description: article.description,
           date: article.publishedAt,
           author: article.author,
-          source: article.source?.name,
           image: article.urlToImage,
           link: article.url,
           category: 'technology',
@@ -226,7 +231,6 @@ export function fetchNews(country, size) {
           description: article.description,
           date: article.publishedAt,
           author: article.author,
-          source: article.source?.name,
           image: article.urlToImage,
           link: article.url,
           category: 'sports',
@@ -243,7 +247,6 @@ export function fetchNews(country, size) {
           description: article.description,
           date: article.publishedAt,
           author: article.author,
-          source: article.source?.name,
           image: article.urlToImage,
           link: article.url,
           category: 'health',
@@ -260,7 +263,6 @@ export function fetchNews(country, size) {
           description: article.description,
           date: article.publishedAt,
           author: article.author,
-          source: article.source?.name,
           image: article.urlToImage,
           link: article.url,
           category: 'entertainment',
@@ -277,7 +279,6 @@ export function fetchNews(country, size) {
           description: article.description,
           date: article.publishedAt,
           author: article.author,
-          source: article.source?.name,
           image: article.urlToImage,
           link: article.url,
           category: 'covid',

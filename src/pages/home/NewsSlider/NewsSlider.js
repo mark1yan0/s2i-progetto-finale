@@ -1,6 +1,6 @@
 import React from 'react';
 import './Slider.css';
-
+import placeholder from '../../../assets/placeholder-image.png';
 import { useSelector } from 'react-redux';
 import { newsSelector } from '../../../services/newsSlice';
 //components
@@ -26,7 +26,9 @@ const NewsSlider = () => {
             key={article?.id}
             className='h-full w-full'
             style={{
-              background: `url(${article?.image}) no-repeat center`,
+              background: `url(${
+                article?.image ? article?.image : placeholder
+              }) no-repeat center`,
               backgroundSize: 'cover',
             }}
           >
@@ -41,7 +43,7 @@ const NewsSlider = () => {
                 <a
                   href={article?.link}
                   target='_blank'
-                  rel='nofollow noreferrer'
+                  rel='noopener noreferrer'
                 >
                   <h1 className='text-xl md:text-3xl'>
                     <strong>{article?.title} </strong>
@@ -57,14 +59,6 @@ const NewsSlider = () => {
               </div>
               <div className='w-full flex justify-between items-center'>
                 <p className='text-xs text-gray-400'>{article?.author}</p>
-                <a
-                  className='z-10 text-gray-400'
-                  href={`https://${article?.source}`}
-                  target='_blank'
-                  rel='nofollow noreferrer'
-                >
-                  {article?.source.toLowerCase()}
-                </a>
               </div>
             </div>
           </div>

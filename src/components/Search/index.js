@@ -2,6 +2,7 @@ import React from 'react';
 
 import CovidSearch from './CovidSearch';
 import WeatherSearch from './WeatherSearch';
+import NewsSearch from './NewsSearch';
 
 const Search = props => {
   switch (props.type) {
@@ -10,6 +11,9 @@ const Search = props => {
 
     case 'weather':
       return <WeatherSearch {...props} />;
+
+    case 'news':
+      return <NewsSearch {...props} />;
 
     default:
       break;
