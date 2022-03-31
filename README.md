@@ -55,7 +55,7 @@
 <p>Ho realizzato diversi custom hooks per facilitarmi alcune parti di codice come il fetching di news ecc.</p>
 
 <h3 id='features'>React features</h3>
-<p>Ho inoltre approfondito alcune features di React stesso. Una di questo è il lazy loading che, in combinazione con la componente Suspense, rende l'app più ottimizzata.
+<p>Ho inoltre approfondito alcune features di React stesso. Una di questo è il lazy loading che, in combinazione con la componente Suspense permetterebbe di avere l'app più ottimizzata. Siccome però, una volta applicato alle Card, dove avrebbe più senso farlo, se si voleva aggiungere l'articolo ai 'leggi più tardi' faceva un flash grafico. Quindi ho optato per la user experience in questo caso.
 Ho inoltre utilizzato dei Portals per costruire le componenti Snackbar e Modals, in modo da non avere il murkup più complesso del necessario. 
 </p>
 

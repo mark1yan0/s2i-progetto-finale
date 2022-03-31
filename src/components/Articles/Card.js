@@ -16,7 +16,7 @@ const Card = ({
   id,
 }) => {
   const dispatch = useDispatch();
-  const allNews = useSelector(state => state.news.allNews);
+  const { allNews, searchNews } = useSelector(state => state.news);
   const readLater = useSelector(state => state.news.readLater);
 
   //truncate text to make it shorter
@@ -25,11 +25,16 @@ const Card = ({
   }
 
   function toggleReadLaterHandler() {
-    let targetArticle = allNews?.find(article => article.id === id);
+    let targetArticle = allNews?.find(article => article?.id === id);
     if (!targetArticle) {
-      targetArticle = JSON.parse(localStorage.getItem('readlater')).find(
-        article => article.id === id
-      );
+      const localStorageArticle = JSON.parse(
+        localStorage.getItem('readlater')
+      ).find(article => article?.id === id);
+      if (!localStorageArticle) {
+        targetArticle = searchNews.find(article => article?.id === id);
+      } else {
+        targetArticle = localStorageArticle;
+      }
     }
     dispatch(toggleReadLater(targetArticle));
   }

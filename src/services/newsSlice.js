@@ -89,9 +89,8 @@ const newsSlice = createSlice({
       const readLaterList = state.readLater;
       const allNewsList = state.allNews;
       const addedArticle = action.payload;
-
       const existisInAllNews = allNewsList.some(
-        article => article.title === addedArticle.title
+        article => article?.title === addedArticle?.title
       );
 
       const isReadLater = addedArticle?.readLater;
@@ -99,7 +98,7 @@ const newsSlice = createSlice({
         // remove from readlater
         if (existisInAllNews) {
           const articleIndex = allNewsList.findIndex(
-            article => article.title === addedArticle.title
+            article => article?.title === addedArticle?.title
           );
           allNewsList.splice(articleIndex, 1, {
             ...addedArticle,
@@ -112,7 +111,7 @@ const newsSlice = createSlice({
           });
         }
         const updatedReadLater = readLaterList.filter(
-          article => article.id !== addedArticle.id
+          article => article?.id !== addedArticle?.id
         );
         state.allNews = allNewsList;
         state.readLater = updatedReadLater;
@@ -120,7 +119,7 @@ const newsSlice = createSlice({
       } else {
         // add to readlater
         const articleIndex = allNewsList.findIndex(
-          article => article.id === addedArticle.id
+          article => article?.id === addedArticle?.id
         );
         allNewsList.splice(articleIndex, 1, {
           ...addedArticle,
