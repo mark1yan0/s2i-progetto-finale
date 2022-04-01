@@ -49,7 +49,9 @@
 <p>TailwindCSS è una libreria per lo styling che, attraverso le proprie utility-classes, rende lo styling molto più spedito e soprattuto da una consistenza nel tema del progetto. Mi è piaciuto molto e sicuramente la riutilizzerò in futuro.</p>
 
 <h3 id='redux'><a href=''>Redux e redux toolkit</a></h3>
-<p>Grazie a questo progetto mi sono veramente scontrato ed ho preso mano con Redux. Dato che gli sviluppatori stessi della libreria indicano di usare redux toolkit ho deciso di seguire questo approccio. Devo dire che non mi trovo male e anche quando si tratta di state complessi (anche se qua non lo sono poi così tanto) aiuta molto.</p>
+<p>Grazie a questo progetto mi sono veramente scontrato ed ho preso mano con Redux. Dato che gli sviluppatori stessi della libreria indicano di usare redux toolkit ho deciso di seguire questo approccio. Devo dire che non mi trovo male e anche quando si tratta di state complessi (anche se qua non lo sono poi così tanto) aiuta molto.
+Ho inoltre utilizzato redux-persist per avere lo state dell'utente persistente. In questo modo ricaricando la pagina si è direttamente loggati.
+</p>
 
 <h3 id='custom-hooks'>Custom Hooks</h3>
 <p>Ho realizzato diversi custom hooks per facilitarmi alcune parti di codice come il fetching di news ecc.</p>

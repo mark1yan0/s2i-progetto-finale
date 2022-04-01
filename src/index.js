@@ -9,23 +9,39 @@ import ScrollToTop from './utilities/ScrollToTop';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import rootReducer from './services';
+// redux persist
+import { persistStore, persistReducer } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import storage from 'redux-persist/lib/storage'; // defaults to localstorage
+
+const persistConfig = {
+  key: 'uptodate',
+  storage,
+  whitelabel: ['authentication'],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 //create store
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),
 });
 
+const persistor = persistStore(store);
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <ScrollToTop />
-        <App />
-      </Router>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <ScrollToTop />
+          <App />
+        </Router>
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
