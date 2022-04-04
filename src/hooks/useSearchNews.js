@@ -53,6 +53,7 @@ const useSearchNews = search => {
     } else {
       dispatch(getSearchNewsSuccess([]));
     }
+    // eslint-disable-next-line
   }, [dispatch, term]);
 };
 

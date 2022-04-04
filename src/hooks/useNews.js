@@ -14,7 +14,7 @@ import { userSelector } from '../services/authSlice';
 const useNews = size => {
   //state
   const { user } = useSelector(userSelector);
-  const { allNews, hasErrors, newsCategories, loading, readLater } =
+  const { allNews, hasErrors, newsCategories, loading } =
     useSelector(newsSelector);
   const dispatch = useDispatch();
 
@@ -68,7 +68,8 @@ const useNews = size => {
     }
 
     fetchNews();
-  }, [allNews, hasErrors, dispatch]);
+    // eslint-disable-next-line
+  }, [allNews, hasErrors, dispatch, user]);
 
   useSliderNews();
 
