@@ -1,5 +1,3 @@
-import axios from 'axios';
-import uuid from 'react-uuid';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -13,14 +11,15 @@ const initialState = {
     sports: [],
     health: [],
     entertainment: [],
-    covid: [],
   },
+  covid: [],
   readLater: localStorage.getItem('readlater')
     ? JSON.parse(localStorage.getItem('readlater'))
     : [],
   categories: false,
   sliderNews: [],
   searchNews: [],
+  noResults: false,
 };
 
 //A slice for news
@@ -38,15 +37,7 @@ const newsSlice = createSlice({
       const payload = action.payload;
 
       state.allNews = state.allNews.concat(payload); //copiare tutte le news + quelle nuove
-    }, //action -> {payload, type}
 
-    getNewsFailure: (state, error) => {
-      state.loading = false;
-      state.hasErrors = true;
-      console.log(error);
-    },
-
-    setCategories: state => {
       state.newsCategories.business = state.allNews.filter(
         article => article.category === 'business'
       );
@@ -71,18 +62,34 @@ const newsSlice = createSlice({
         article => article.category === 'entertainment'
       );
 
-      state.newsCategories.covid = state.allNews.filter(
-        article => article.category === 'covid'
-      );
-
       state.categories = true;
       state.loading = false;
+    }, //action -> {payload, type}
+
+    getNewsFailure: (state, action) => {
+      state.loading = false;
+      state.hasErrors = true;
+      console.log(action.payload);
     },
 
     getSearchNewsSuccess: (state, action) => {
       state.loading = false;
       state.hasErrors = false;
+      state.noResults = false;
       state.searchNews = action.payload;
+    },
+
+    getSearchNewsFailure: state => {
+      state.loading = false;
+      state.hasErrors = true;
+      state.noResults = true;
+    },
+
+    getCovidNewsSuccess: (state, action) => {
+      state.loading = false;
+      state.hasErrors = false;
+      state.noResults = false;
+      state.covid = action.payload;
     },
 
     toggleReadLater: (state, action) => {
@@ -146,8 +153,9 @@ export const {
   getNews,
   getNewsSuccess,
   getNewsFailure,
-  setCategories,
   toggleReadLater,
+  getSearchNewsFailure,
+  getCovidNewsSuccess,
   setSliderNews,
   getSearchNewsSuccess,
 } = newsSlice.actions;
@@ -160,155 +168,3 @@ export default newsSlice.reducer;
 // a functional component, we need to write a selector
 // function alongside our news slice
 export const newsSelector = state => state.news;
-
-//Asynchronous thunk action
-// A thunk is a middleware that lets us call a function
-// to do something, and which results in dispatching
-// Redux actions to update the store
-export function fetchNews(country, size) {
-  return async (dispatch, getState) => {
-    const loading = getState().news.loading;
-    const readLater = getState().news.readLater;
-    const user = getState().authentication?.user;
-    if (!loading && user !== null) dispatch(getNews());
-    if (user !== null) {
-      try {
-        const businessRes = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=${country}&category=business&pageSize=${size}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
-        );
-
-        const business = businessRes?.data?.articles.map(article => ({
-          title: article.title,
-          description: article.description,
-          date: article.publishedAt,
-          author: article.author,
-          image: article.urlToImage,
-          link: article.url,
-          category: 'business',
-          id: uuid(),
-          readLater: false,
-        }));
-
-        const scienceRes = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=${country}&category=science&pageSize=${size}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
-        );
-
-        const science = scienceRes?.data?.articles.map(article => ({
-          title: article.title,
-          description: article.description,
-          date: article.publishedAt,
-          author: article.author,
-          image: article.urlToImage,
-          link: article.url,
-          category: 'science',
-          id: uuid(),
-          readLater: false,
-        }));
-
-        const technologyRes = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=${country}&category=technology&pageSize=${size}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
-        );
-
-        const technology = technologyRes?.data?.articles.map(article => ({
-          title: article.title,
-          description: article.description,
-          date: article.publishedAt,
-          author: article.author,
-          image: article.urlToImage,
-          link: article.url,
-          category: 'technology',
-          id: uuid(),
-          readLater: false,
-        }));
-
-        const sportsRes = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=${country}&category=sports&pageSize=${size}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
-        );
-
-        const sports = sportsRes?.data?.articles.map(article => ({
-          title: article.title,
-          description: article.description,
-          date: article.publishedAt,
-          author: article.author,
-          image: article.urlToImage,
-          link: article.url,
-          category: 'sports',
-          id: uuid(),
-          readLater: false,
-        }));
-
-        const healthRes = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=${country}&category=health&pageSize=${size}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
-        );
-
-        const health = healthRes?.data?.articles.map(article => ({
-          title: article.title,
-          description: article.description,
-          date: article.publishedAt,
-          author: article.author,
-          image: article.urlToImage,
-          link: article.url,
-          category: 'health',
-          id: uuid(),
-          readLater: false,
-        }));
-
-        const entertainmentRes = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=${country}&category=entertainment&pageSize=${size}&apiKey=${process.env.REACT_APP_NEWS_KEY}`
-        );
-
-        const entertainment = entertainmentRes?.data?.articles.map(article => ({
-          title: article.title,
-          description: article.description,
-          date: article.publishedAt,
-          author: article.author,
-          image: article.urlToImage,
-          link: article.url,
-          category: 'entertainment',
-          id: uuid(),
-          readLater: false,
-        }));
-
-        const covidRes = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=${country}&p=Coronavirus&pageSize=6&apiKey=${process.env.REACT_APP_NEWS_KEY}`
-        );
-
-        const covid = covidRes?.data?.articles.map(article => ({
-          title: article.title,
-          description: article.description,
-          date: article.publishedAt,
-          author: article.author,
-          image: article.urlToImage,
-          link: article.url,
-          category: 'covid',
-          id: uuid(),
-          readLater: false,
-        }));
-
-        let payload = [
-          ...business,
-          ...science,
-          ...technology,
-          ...sports,
-          ...health,
-          ...entertainment,
-          ...covid,
-        ];
-
-        // when reloading replace localstorage items into allNews
-        payload.forEach((article, index) => {
-          readLater.forEach(item => {
-            if (item.title === article.title) {
-              payload.splice(index, 1, item);
-            }
-          });
-        });
-
-        dispatch(getNewsSuccess(payload));
-      } catch (error) {
-        //on failure update the store accordingly
-        dispatch(getNewsFailure(error));
-      }
-    }
-  };
-}

@@ -49,8 +49,8 @@ const Card = ({
           className='object-cover rounded-t w-full h-60'
         />
       </a>
-      <div className=' rounded-b p-4 h-70 relative hover:text-primary-dark'>
-        <strong title={title}>
+      <div className='rounded-b p-4 h-70 relative hover:text-primary-dark'>
+        <strong title={title} className='overflow-hidden'>
           <a
             href={link}
             target='_blank'
@@ -60,7 +60,7 @@ const Card = ({
             {truncate(title, 60, '...')}
           </a>
         </strong>
-        <p title={description} className='text-sm'>
+        <p title={description} className='text-sm overflow-hidden'>
           {truncate(description, 100, '...')}
         </p>
         <br />

@@ -14,7 +14,6 @@ const covidSlice = createSlice({
   reducers: {
     getCovidStats: state => {
       state.loading = true;
-      // state.full = false;
     },
     getCovidStatsSuccess: (state, action) => {
       state.covidStats = action.payload;
@@ -22,10 +21,10 @@ const covidSlice = createSlice({
       state.hasErrors = false;
       state.full = true;
     },
-    getCovidStatsFailure: (state, error) => {
+    getCovidStatsFailure: (state, action) => {
       state.loading = false;
       state.hasErrors = true;
-      console.log(error);
+      console.log(action.payload);
     },
   },
 });

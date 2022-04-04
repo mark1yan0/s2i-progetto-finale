@@ -30,7 +30,7 @@ const Home = () => {
             message="C'è stato un problema nel caricare le notizie"
           />
         )}
-        {!loading && <Grid country='it' category size='3' />}
+        {!loading && <Grid category size='3' />}
       </div>
     </>
   );

@@ -10,10 +10,11 @@
 <h2 id="about">Riguardo il progetto</h2>
 <p>Come da richiesta, questa è un'app che utilizza API RESTful esterne e salva dati il LocalStorage.</p>
 
-<p>Io ho deciso di usare tre API diverse:</p>
+<p>Io ho deciso di usare quattro API diverse:</p>
 
 <ul>
-    <li><a href="https://newsapi.org/">News</a></li>
+    <li><a href="https://rapidapi.com/segjsierra-tYlPlZHk_bd/api/current-news/">News Generali</a></li>
+    <li><a href="https://rapidapi.com/newscatcher-api-newscatcher-api-default/api/free-news/">Rierca News</a></li>
     <li><a href="https://rapidapi.com/api-sports/api/covid-193/">Covid</a></li>
     <li><a href="https://rapidapi.com/weatherapi/api/weatherapi-com/">Meteo</a></li>
 </ul>

@@ -6,18 +6,19 @@ import { useSelector } from 'react-redux';
 import FiltersContainer from '../Filters/FiltersContainer';
 import Card from './Card';
 
-const Grid = ({ country, size, category, filters, covidpage }) => {
+const Grid = ({ size, category, filters, covidpage }) => {
   const history = useHistory();
-  const { hasErrors, searchNews } = useSelector(state => state.news);
-  const { allNews, newsCategories } = useNews(country, 8);
+  const { hasErrors, searchNews, covid, noResults } = useSelector(
+    state => state.news
+  );
+  const { allNews, newsCategories } = useNews(size);
 
-  const covidCategory = newsCategories.covid;
   const [articles, setArticles] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState('');
 
   useEffect(() => {
     if (covidpage) {
-      setArticles(covidCategory);
+      setArticles(covid);
     } else {
       if (searchNews.length > 0) {
         setArticles(searchNews);
@@ -44,6 +45,7 @@ const Grid = ({ country, size, category, filters, covidpage }) => {
         <div className='sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
           {newsCategories[category].slice(0, size).map(article => (
             <Card
+              key={article?.id}
               image={article?.image}
               link={article?.link}
               title={article?.title}
@@ -61,8 +63,9 @@ const Grid = ({ country, size, category, filters, covidpage }) => {
     ))
   ) : (
     <section className='sm:grid sm:grid-cols-2 md:grid-cols-3 gap-7 py-4 xl:max-w-screen-xl'>
-      {articles.map(article => (
+      {articles?.map(article => (
         <Card
+          key={article?.id}
           image={article?.image}
           link={article?.link}
           title={article?.title}
@@ -89,7 +92,10 @@ const Grid = ({ country, size, category, filters, covidpage }) => {
         />
       )}
       {!hasErrors && newsContent}
-      {hasErrors && <h1>C'è stato un errore nel caricamento delle notizie</h1>}
+      {hasErrors && !noResults && (
+        <h1>C'è stato un errore nel caricamento delle notizie</h1>
+      )}
+      {hasErrors && noResults && <h1>Nessun risultato trovato</h1>}
     </>
   );
 };

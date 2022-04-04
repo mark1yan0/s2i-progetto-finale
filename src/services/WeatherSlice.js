@@ -34,10 +34,10 @@ const weatherSlice = createSlice({
         );
       }
     },
-    getWeatherFailure: (state, error) => {
+    getWeatherFailure: (state, action) => {
       state.loading = false;
       state.hasErrors = true;
-      console.log(error);
+      console.log(action.payload);
     },
   },
 });
