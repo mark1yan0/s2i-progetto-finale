@@ -14,6 +14,7 @@ import getCurrentLocation from '../utilities/getCurrentLocation';
 import { useSelector, useDispatch } from 'react-redux';
 import SnackBar from './SnackBar';
 import UserDropDown from './UserDropDown';
+import Logo from '../assets/logo.png';
 
 const TopNav = () => {
   const history = useHistory();
@@ -78,11 +79,14 @@ const TopNav = () => {
       className='w-full fixed top-0 bg-primary-dark z-10 flex justify-between items-center px-2 sm:px-6 py-3 text-text-light'
       style={{ zIndex: 110 }}
     >
-      <h1>
-        <NavLink className='text-5xl' exact to='/'>
-          UpToDate
-        </NavLink>
-      </h1>
+      <div className='flex items-center'>
+        <img src={Logo} alt='logo' style={{ width: '3rem' }} />
+        <h1 className='ml-2'>
+          <NavLink className='text-5xl' exact to='/'>
+            UpToDate
+          </NavLink>
+        </h1>
+      </div>
       {user && (
         <div className='hidden sm:block'>
           <UserDropDown userEmail={user?.email} />
