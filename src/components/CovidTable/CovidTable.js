@@ -9,9 +9,15 @@ import SnackBar from '../SnackBar';
 
 const CovidTable = ({ expanded }) => {
   const { covidStats, loading, hasErrors } = useSelector(covidSelector);
+
   return (
     <section className='w-full bg-secondary-dark py-1 md:py-6 my-2'>
-      {hasErrors && <SnackBar type='error' message="C'è stato un problema" />}
+      {hasErrors && (
+        <SnackBar
+          type='error'
+          message="C'è stato un problema nel caricare le notizie"
+        />
+      )}
       {expanded ? (
         <Expanded covidStats={covidStats} loading={loading} />
       ) : (
